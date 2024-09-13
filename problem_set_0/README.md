@@ -290,7 +290,13 @@ Outliers in the dataset:
 ```
  ![image](https://github.com/user-attachments/assets/e78a928a-1d7d-4c64-9033-1f566b5d72b9)
 
+- **General Relationship**: From the scatterplot, the data shows that weight increases rapidly from birth to around 20 years of age, after which it stabilizes and remains relatively constant throughout adulthood. There is a noticeable leveling off between ages 20 and 60, with weights clustering around the 60-80 kg range. In older age groups, weight remains fairly stable with a slight decrease as individuals age beyond 60.
 
+- **Outliers**: A number of outliers were identified, particularly for very young individuals with extremely low weights. For example, individuals like `Edna Williams` (0.09 years, 4.37 kg), `Ken Graser` (0.014 years, 4.03 kg), and `Matthew Almen` (0.29 years, 4.94 kg) do not follow the general trend, as their weights are much lower than the bulk of the population.
+
+- **Process for Identifying Outliers**: Outliers were identified by inspecting the scatterplot for data points that were significantly below the general cluster of weight values for their respective age groups. Individuals with weights far below the typical range for their age were then listed as outliers in the dataset.
+
+  
 ## Exercise 4: Privacy-Preserving Estimation of Drug Use
 
 ### 4a. Population Generation
