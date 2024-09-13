@@ -96,6 +96,12 @@ plot_new_cases(['Arizona','Connecticut','New York','New Mexico'])
 ```
 ![image](https://github.com/user-attachments/assets/eed76ca6-39d6-4dfc-b3b2-bb20c9bcd8f4)
 
+#### Limitations:
+- **Data Size**: Plotting new case counts for many states simultaneously can result in cluttered graphs that are difficult to read and interpret. This issue becomes more significant when dealing with all 50 states at once.
+- **Date Gaps**: If there are gaps in the data for certain dates (e.g., due to missing or delayed reports), this could affect the smoothness of the graph, leading to misleading spikes or drops.
+- **Scaling Differences**: States with significantly different population sizes and case numbers may appear out of scale on the same graph, potentially obscuring trends in states with lower case counts.
+
+  
 ### 2c. Find Peak Case Dates
 
 ```python
