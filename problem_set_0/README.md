@@ -12,12 +12,27 @@ def temp_tester(normal_temp):
     def tester(temp):
         return abs(temp - normal_temp) <= 1
     return tester
+```
 
 
 ### 1b. Ambiguity in Problem Description
 One ambiguity is the temperature scale. The problem does not explicitly state whether to use Celsius or Fahrenheit, which could lead to different results if interpreted differently.
 
 ### 1c. Testing
+
+```python
+# Create temperature testers
+human_tester = temp_tester(37)
+chicken_tester = temp_tester(41.1)
+
+# Test cases
+print(chicken_tester(42))  # True, within 1 degree of 41.1
+print(human_tester(42))    # False, 42 is way too high for 37
+print(chicken_tester(43))  # False, more than 1 degree away from 41.1
+print(human_tester(35))    # False, too low for a human's normal temp of 37
+print(human_tester(98.6))  # False, normal temp in Fahrenheit, not Celsius
+```
+
 Two temperature testers were defined: human_tester = temp_tester(37) and chicken_tester = temp_tester(41.1). Here are the test results:
 
 chicken_tester(42) returns True
