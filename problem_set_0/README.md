@@ -361,6 +361,10 @@ def estimate_drug_users(n, d, sample_size):
 # Example usage
 estimated_users = estimate_drug_users(1000, 100, 50)
 ```
+
+- **Handling Negative Estimates**: When estimating the number of drug users based on randomized response protocol, random variability may sometimes produce negative estimates. To address this, the function sets negative estimates to zero, as a negative number of drug users is not logically possible. This method ensures that the final estimate remains realistic and avoids erroneous outcomes caused by random fluctuations in the data.
+
+
 ### 4d. Run a simulation
 ```python
 # Run a simulation for the given parameters
@@ -400,6 +404,11 @@ plt.show()
 ```
 ![image](https://github.com/user-attachments/assets/4c999d36-41d7-4d4d-a3d9-539ecc2d2277)
 
+ **Number of Repetitions**: The experiment was repeated 1,000 times to provide a sufficiently large sample to observe the variability in the estimates. A larger number of repetitions helps in getting a more accurate distribution of the estimated number of drug users.
+
+- **Histogram of Estimates**: The histogram shows a wide range of estimates, with a large number of estimates near zero and a gradual decline as the estimated number of drug users increases. This variability is expected due to the randomness introduced by the randomized response protocol.
+
+- **Errors and Variability**: The high frequency of low estimates, including zero, indicates that the randomness in the protocol often underestimates the true number of drug users. The tail of the histogram shows some larger estimates, but these are less frequent. This pattern highlights the potential for both under- and over-estimation, with a bias towards lower estimates due to random variability and privacy-preserving randomness.
 
 ### 4f. Explore relationship between sample size and standard deviation of possible predictions
 
@@ -437,3 +446,6 @@ explore_sample_size_variability(1000, [100, 500], sample_size_range)
 ```
 
 ![image](https://github.com/user-attachments/assets/30ebc08a-635a-4fd7-b4a4-eeca466fc818)
+
+- **Findings**: As the sample size increases, the variability (represented by the shaded region of ±1 standard deviation) decreases for both scenarios (populations with 100 and 500 drug users). In smaller sample sizes, there is significant variability, with estimates fluctuating widely. However, as the sample size grows larger, the estimates become more stable, converging toward the true number of drug users. This shows that larger sample sizes result in more accurate estimates with reduced uncertainty. The trend is similar in both scenarios, but the population with 500 users shows less initial variability compared to the population with 100 users due to the larger underlying proportion of drug users in the sample.
+
