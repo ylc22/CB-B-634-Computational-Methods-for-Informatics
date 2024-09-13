@@ -95,3 +95,25 @@ def plot_new_cases(states):
 plot_new_cases(['Arizona','Connecticut','New York','New Mexico'])
 ```
 ![image](https://github.com/user-attachments/assets/eed76ca6-39d6-4dfc-b3b2-bb20c9bcd8f4)
+
+### 2c. Find Peak Case Dates
+
+```python
+def find_peak_case_date(state):
+    
+    # Filter data for the specified state
+    state_data = data[data['state'] == state]
+    
+    # Find the date with the highest number of new cases
+    peak_day = state_data.loc[state_data['new_cases'].idxmax()]
+    
+    return peak_day['date'], int(peak_day['new_cases'])
+
+# Example usage:
+find_peak_case_date('Illinois')
+```
+#### output
+```python
+(Timestamp('2022-01-18 00:00:00'), 93423)
+```
+The peak number of new COVID-19 cases in Illinois occurred on January 18, 2022, with a total of 93423 new cases reported on that day.
