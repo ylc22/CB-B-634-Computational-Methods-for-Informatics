@@ -148,3 +148,12 @@ compare_peak_cases('Missouri', 'Alabama')
 The comparison shows that Missouri peaked first, with a difference of 327 days between its peak and Alabama's peak.
 
 
+### 2e. Examine individual states
+```python
+# Plot the new cases in Florida
+plot_new_cases(['Florida'])
+```
+![image](https://github.com/user-attachments/assets/5ef60218-4892-4c5c-8399-51d96670f0dc)
+
+The plot for Florida shows some large spikes in new COVID-19 cases, particularly during major waves of the pandemic. These spikes may correspond to the nationwide surges in cases caused by variants like Delta and Omicron. My reason is that as a major tourist destination, Florida may have experienced waves of infections linked to large gatherings or travel.
+
