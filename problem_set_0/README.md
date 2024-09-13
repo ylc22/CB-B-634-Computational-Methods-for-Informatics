@@ -2,7 +2,7 @@
 
 This project contains the implementation of four exercises focused on clinical decision support, analyzing COVID-19 case data, population data, and privacy-preserving estimation techniques.
 
-## Exercise 1: Clinical Decision Support - Temperature Tester (20 points)
+## Exercise 1: Clinical Decision Support - Temperature Tester 
 
 ### 1a. Function Implementation
 The `temp_tester` function creates a temperature checker for different species or contexts. It takes a normal temperature and returns a function that tests whether a given temperature is within 1 degree of that normal.
@@ -26,11 +26,11 @@ human_tester = temp_tester(37)
 chicken_tester = temp_tester(41.1)
 
 # Test cases
-print(chicken_tester(42))  # True, within 1 degree of 41.1
-print(human_tester(42))    # False, 42 is way too high for 37
-print(chicken_tester(43))  # False, more than 1 degree away from 41.1
-print(human_tester(35))    # False, too low for a human's normal temp of 37
-print(human_tester(98.6))  # False, normal temp in Fahrenheit, not Celsius
+print(chicken_tester(42))  
+print(human_tester(42))    
+print(chicken_tester(43)) 
+print(human_tester(35))    
+print(human_tester(98.6)) 
 ```
 
 Two temperature testers were defined: human_tester = temp_tester(37) and chicken_tester = temp_tester(41.1). Here are the test results:
@@ -49,9 +49,49 @@ The COVID-19 data was loaded from The New York Times GitHub repository. Here's t
 
 ```python
 import pandas as pd
-data = pd.read_csv('https://github.com/nytimes/covid-19-data/raw/master/us-states.csv')
 
+# URL for the CSV file
+url = 'https://github.com/nytimes/covid-19-data/raw/master/us-states.csv'
+
+# Load the CSV directly from the URL
+data = pd.read_csv(url)
+
+# Convert the 'date' column to datetime format for easier manipulation
+data['date'] = pd.to_datetime(data['date'])
+
+# Sort the data by state and date
+data = data.sort_values(['state', 'date'])
+
+# Calculate new daily cases by subtracting the previous day's cumulative cases within each state
+data['new_cases'] = data.groupby('state')['cases'].diff().fillna(0)
+```
 
 ### 2b. Visualization of New Cases
 
+```python
+import matplotlib.pyplot as plt
 
+def plot_new_cases(states):
+  
+    plt.figure(figsize=(9, 6))
+    
+    # Plot the new cases for each state
+    for state in states:
+        state_data = data[data['state'] == state]
+        plt.plot(state_data['date'], state_data['new_cases'], label=state)
+    
+    # Labeling the plot
+    plt.xlabel('Date')
+    plt.ylabel('New Cases')
+    plt.title('New COVID-19 Cases by State')
+    plt.legend()
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    
+    # Show the plot
+    plt.show()
+
+# Example usage:
+plot_new_cases(['Arizona','Connecticut','New York','New Mexico'])
+```
+![image](https://github.com/user-attachments/assets/eed76ca6-39d6-4dfc-b3b2-bb20c9bcd8f4)
