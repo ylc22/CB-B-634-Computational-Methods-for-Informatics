@@ -239,6 +239,12 @@ Weight - Mean: 60.884134159929715, Std Dev: 18.41182426565962, Min: 3.3820836824
 ```
 ![image](https://github.com/user-attachments/assets/01949708-8994-4b93-a3e9-679d418d770c)
 
+- Mean: 60.884134159929715, Std Dev: 18.41182426565962, Min: 3.3820836824389326, Max: 100.43579300336947
+
+- **Role of the number of bins**: The number of bins in a histogram determines the granularity of the data visualization. Too few bins can oversimplify the data, hiding important details, while too many bins can create a noisy graph, making it difficult to interpret patterns. Choosing an appropriate number of bins provides a clear overview of the data distribution while maintaining enough detail to capture key patterns.
+  
+- **Outliers and patterns**: Upon analyzing the age distribution, no significant outliers were observed. The distribution follows a relatively normal pattern, with most individuals falling in the middle age range. This suggests that the population is well-distributed across different age groups without any extreme age values.
+- 
 ### 3d. Explore Relationships
 
 ```python
