@@ -1,4 +1,4 @@
-# Clinical Decision Support and Data Analysis Projects
+# Problem Set 0 by Luis Chan
 
 This project contains the implementation of four exercises focused on clinical decision support, analyzing COVID-19 case data, population data, and privacy-preserving estimation techniques.
 
