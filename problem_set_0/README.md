@@ -117,3 +117,34 @@ find_peak_case_date('Illinois')
 (Timestamp('2022-01-18 00:00:00'), 93423)
 ```
 The peak number of new COVID-19 cases in Illinois occurred on January 18, 2022, with a total of 93423 new cases reported on that day.
+
+### 2d. Compare peak cases
+
+```python
+def compare_peak_cases(state1, state2):
+    
+    # Get the peak dates for both states
+    peak_date1, _ = find_peak_case_date(state1)
+    peak_date2, _ = find_peak_case_date(state2)
+    
+    # Compare the peak dates and calculate the difference in days
+    if peak_date1 < peak_date2:
+        first_peak_state = state1
+        days_between = (peak_date2 - peak_date1).days
+    else:
+        first_peak_state = state2
+        days_between = (peak_date1 - peak_date2).days
+    
+    return f"{first_peak_state} peaked first, with a difference of {days_between} days between peaks."
+
+# Example usage:
+compare_peak_cases('Missouri', 'Alabama')
+```
+
+#### output
+```python
+'Missouri peaked first, with a difference of 327 days between peaks.'
+```
+The comparison shows that Missouri peaked first, with a difference of 327 days between its peak and Alabama's peak.
+
+
