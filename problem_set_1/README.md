@@ -444,7 +444,8 @@ for name, dataset in datasets.items():
 ```
 
 **Output**
-`import time
+```python
+import time
 
 # Run tests and measure time for different datasets
 datasets = {
@@ -464,7 +465,8 @@ for name, dataset in datasets.items():
 
     print(f"\nDataset: {name}")
     print(f"alg1 result: {result1[:10]}... (time: {alg1_time:.5f} seconds)")
-    print(f"alg2 result: {result2[:10]}... (time: {alg2_time:.5f} seconds)")`
+    print(f"alg2 result: {result2[:10]}... (time: {alg2_time:.5f} seconds)")
+```
 
 - **Hypothesis**:
   - `alg1`: This algorithm behaves like a **bubble sort**. It repeatedly scans the list and swaps adjacent elements if they are out of order. This continues until no more swaps are needed, resulting in O(n²) time complexity.
