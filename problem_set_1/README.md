@@ -2,9 +2,8 @@
 
 ---
 ## Exercise 1: Efficiently Search Patient Data
----
 
-### 1a. Plot Age Distribution (3 points)
+### 1a. Plot Age Distribution
 
 ```python
 import xml.etree.ElementTree as ET
@@ -45,6 +44,16 @@ multiple_age_patients = len(same_age_patients) > 0
 print("Patients with the same age:", same_age_patients[:10])
 print("Do multiple patients share the same age?", multiple_age_patients)
 ```
+
+`output`
+![image](https://github.com/user-attachments/assets/6b82b014-4b8d-44c4-b8f2-a3ad60cc4ec9)
+
+```python
+Patients with the same age: []
+Do multiple patients share the same age? False
+```
+
+
 - **Age Distribution**:
   A histogram was plotted to show the distribution of ages among the patients. The plot helps visualize the spread of ages and whether any patients share the same age.
 
