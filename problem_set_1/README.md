@@ -279,7 +279,7 @@ The function `count_patients_in_age_gender_range` is correct because it uses bin
 
 ---
 
-# Exercise 2: Computer Math as a Model of Math
+## Exercise 2: Computer Math as a Model of Math
 
 ---
 
@@ -289,7 +289,7 @@ The function `count_patients_in_age_gender_range` is correct because it uses bin
 2e16 + 1 == 2 * 10 ** 16 + 1
 ```
 
-**output**
+**Output**
 `False`
 
 The cause of this behavior is floating-point precision limitations. Numbers that are significantly different in magnitude cannot always be represented accurately when added together. This leads to situations where small differences are ignored due to rounding, which results in counterintuitive behavior like 2e16 + 1 being equal to 2e16.
@@ -317,25 +317,41 @@ print (
 )
 ```
 
-**output**
+**Output**
 
 ![image](https://github.com/user-attachments/assets/bc63cbc5-7724-47f1-8c01-ecf59f55c61a)
 
-- ### Why Logspace and Log-Log Axis are Used:
-- **Logarithmic scale**: `np.logspace` generates values of \( h \) spread across orders of magnitude, from \( 10^{-10} \) to 1. This helps in observing changes across very small to larger values.
-- **Log-log plot**: The log-log scale highlights exponential relationships, making it easier to visualize both very small and large errors as \( h \) changes.
+### Why Logarithmic Scales and Log-Log Axis are Used
 
-- ### What Happens as \( h \) Gets Smaller:
-As \( h \) decreases, the error initially decreases, as expected. But once \( h \) becomes very small (below \( 10^{-8} \)), the error starts to increase due to precision limitations.
+- **Logarithmic Scale**:  
+  The function `np.logspace` generates values of \( h \) spread across several orders of magnitude, ranging from \( 10^{-10} \) to 1. This allows us to observe changes in the behavior of the error over a wide range of values, from very small to larger increments of \( h \).
 
-- ### Explanation of the Behavior:
-The increasing error at small \( h \) values is caused by **floating-point round-off errors**. When \( h \) is extremely small, numerical precision limits of floating-point arithmetic introduce significant inaccuracies.
+- **Log-Log Plot**:  
+  The use of a log-log plot highlights exponential relationships. This is particularly useful for visualizing the changes in error as \( h \) varies, allowing both small and large errors to be compared on the same scale.
 
-- ### Hypothesis on Why the Results Differ from Theory:
-The **finite precision** of floating-point numbers leads to errors when calculating differences with very small \( h \). Once \( h \) reaches values close to machine precision (around \( 10^{-16} \)), round-off errors dominate the calculations.
+---
 
-- ### Evidence to Support the Hypothesis:
-The error begins increasing for \( h \) smaller than \( 10^{-8} \), which aligns with the precision limit of floating-point numbers (around \( 10^{-16} \)). This confirms that precision errors are responsible for the divergence from theoretical results.
+### Behavior as \( h \) Gets Smaller
+
+- As \( h \) decreases, the error initially follows the expected trend of decreasing. However, when \( h \) becomes very small (typically below \( 10^{-8} \)), the error starts increasing again. This unexpected rise in error is due to precision limitations inherent in floating-point arithmetic.
+
+---
+
+### Explanation for the Observed Behavior
+
+- The increasing error for small \( h \) values can be attributed to **floating-point round-off errors**. As \( h \) becomes extremely small, the differences between \( f(x_0 + h) \) and \( f(x_0) \) also become very small. At this point, the limited precision of floating-point arithmetic causes inaccuracies, leading to a rise in the error.
+
+---
+
+### Hypothesis on Why the Results Deviate from Theory
+
+- The **finite precision** of floating-point numbers in the IEEE 754 standard explains the deviation. When \( h \) approaches values near the machine precision limit (around \( 10^{-16} \) for 64-bit floats), round-off errors become dominant. These errors prevent further convergence of the difference quotient to the theoretical limit.
+
+---
+
+### Evidence Supporting the Hypothesis
+
+- The increase in error for \( h \) values smaller than \( 10^{-8} \) aligns with the precision limits of floating-point numbers (approximately \( 10^{-16} \)). This strongly supports the hypothesis that precision errors are responsible for the deviation from the expected results.
 
 
 
