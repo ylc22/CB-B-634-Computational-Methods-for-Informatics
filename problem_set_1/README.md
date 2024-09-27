@@ -130,15 +130,59 @@ Oldest Patient: {'age': 84.99855742449432, 'gender': 'female', 'name': 'Monica C
 - **Method for Finding the Second Oldest in O(n) Time**:
   Iterate through the list once, keeping track of the largest and second-largest ages. This method ensures a linear-time solution, O(n), for finding the second oldest patient.
 
-- **Advantages of Sorting vs. O(n) Solution**:
-  Sorting (O(n log n)) is useful when you need to perform multiple queries on the dataset, such as finding the top k oldest patients. The O(n) solution is faster for a single query but doesn’t provide sorted data for future queries.
+```python
+def find_second_oldest(patients):
+    oldest = second_oldest = None
+
+    for patient in patients:
+        age = patient['age']
+        if oldest is None or age > oldest:
+            second_oldest = oldest
+            oldest = age
+        elif second_oldest is None or age > second_oldest:
+            second_oldest = age
+
+    return second_oldest
+```
+
+- **Scenarios Where Sorting is Advantageous:**
+
+Multiple Queries: Sorting helps when you need to repeatedly find the oldest, second oldest, or other values, since accessing sorted data is O(1) after the initial sort.
+Efficient Range Queries: A sorted list allows for efficient age range queries and binary search, which are faster (O(log n)) compared to scanning an unsorted list.
+Preprocessing: If you're doing many different queries on the same dataset, sorting once (O(n log n)) can save time overall.
+In contrast, the O(n) solution is preferable when you only need to find the second oldest patient once, as it avoids the overhead of sorting.
 
 ---
 
-### 1e. Binary Search for Specific Age (2 points)
+### 1e. Binary Search for Specific Age 
 
-- **Binary Search Implementation**:
-  A binary search was implemented to find the patient who is exactly 41.5 years old. The search returns the patient if found or `None` if no patient with that age exists.
+```python
+from bisect import bisect_left
+
+def binary_search_age(patients, target_age):
+    # List of ages for binary search
+    ages = [patient['age'] for patient in patients]
+    
+    # Perform binary search
+    index = bisect_left(ages, target_age)
+    
+    # Check if the target age is found
+    if index < len(ages) and ages[index] == target_age:
+        return patients[index]  # Return the patient with the exact age
+    else:
+        return None  # If no patient is found with the exact age
+
+# Sorted patient list (from the previous step)
+patient_41_5 = binary_search_age(sorted_patients, 41.5)
+
+print(patient_41_5)
+```
+**output**
+
+```python
+{'age': 41.5, 'gender': 'male', 'name': 'John Braswell'}
+```
+The person is John Braswell.
 
 ---
 
