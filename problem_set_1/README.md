@@ -125,7 +125,7 @@ Oldest Patient: {'age': 84.99855742449432, 'gender': 'female', 'name': 'Monica C
 
 ---
 
-### 1d. Finding the Second Oldest Patient (4 points)
+### 1d. Finding the Second Oldest Patient 
 
 - **Method for Finding the Second Oldest in O(n) Time**:
   Iterate through the list once, keeping track of the largest and second-largest ages. This method ensures a linear-time solution, O(n), for finding the second oldest patient.
@@ -147,9 +147,10 @@ def find_second_oldest(patients):
 
 - **Scenarios Where Sorting is Advantageous:**
 
-Multiple Queries: Sorting helps when you need to repeatedly find the oldest, second oldest, or other values, since accessing sorted data is O(1) after the initial sort.
+- Multiple Queries: Sorting helps when you need to repeatedly find the oldest, second oldest, or other values, since accessing sorted data is O(1) after the initial sort.
 Efficient Range Queries: A sorted list allows for efficient age range queries and binary search, which are faster (O(log n)) compared to scanning an unsorted list.
-Preprocessing: If you're doing many different queries on the same dataset, sorting once (O(n log n)) can save time overall.
+
+- Preprocessing: If you're doing many different queries on the same dataset, sorting once (O(n log n)) can save time overall.
 In contrast, the O(n) solution is preferable when you only need to find the second oldest patient once, as it avoids the overhead of sorting.
 
 ---
