@@ -2,14 +2,49 @@
 
 ---
 ## Exercise 1: Efficiently Search Patient Data
-
-## Objective:
-Analyze patient data from an XML file to gain insights into patient demographics. Organize the data to allow efficient O(log n) searches for patients of a given age.
-
 ---
 
 ### 1a. Plot Age Distribution (3 points)
 
+```python
+import xml.etree.ElementTree as ET
+import matplotlib.pyplot as plt
+from collections import Counter
+
+# Load and parse the XML file
+xml_file_path = '/Users/luischan/Downloads/hw1-patients.xml'  
+tree = ET.parse(xml_file_path)
+root = tree.getroot()
+
+# Extract patient data (age, gender, name)
+patients = []
+for patient in root.findall('.//patient'):
+    age = float(patient.get('age'))
+    gender = patient.get('gender')
+    name = patient.get('name')
+    patients.append({'age': age, 'gender': gender, 'name': name})
+
+# Task 1a: Plot Age Distribution
+ages = [patient['age'] for patient in patients]
+
+# Plotting the histogram for Age Distribution
+plt.hist(ages, bins=20, edgecolor='black', alpha=0.7)
+plt.title("Age Distribution of Patients")
+plt.xlabel("Age")
+plt.ylabel("Number of Patients")
+plt.show()
+
+# Check for any patients with the same exact age
+age_counts = Counter(ages)
+same_age_patients = [age for age, count in age_counts.items() if count > 1]
+
+# Extra Credit: Identify if multiple patients share the same age
+multiple_age_patients = len(same_age_patients) > 0
+
+# Output
+print("Patients with the same age:", same_age_patients[:10])
+print("Do multiple patients share the same age?", multiple_age_patients)
+```
 - **Age Distribution**:
   A histogram was plotted to show the distribution of ages among the patients. The plot helps visualize the spread of ages and whether any patients share the same age.
 
