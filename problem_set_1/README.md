@@ -45,7 +45,8 @@ print("Patients with the same age:", same_age_patients[:10])
 print("Do multiple patients share the same age?", multiple_age_patients)
 ```
 
-`output`
+*output*
+
 ![image](https://github.com/user-attachments/assets/6b82b014-4b8d-44c4-b8f2-a3ad60cc4ec9)
 
 ```python
@@ -53,15 +54,14 @@ Patients with the same age: []
 Do multiple patients share the same age? False
 ```
 
-
-- **Age Distribution**:
-  A histogram was plotted to show the distribution of ages among the patients. The plot helps visualize the spread of ages and whether any patients share the same age.
-
 - **Evidence of Shared Ages**:
   No patients were found to share the same exact age. All ages are unique.
 
-- **Extra Credit (2 points)**:
-  Having multiple patients with the same age would complicate the binary search because you would need to account for all occurrences of that age. The solution would need to handle ranges of patients with the same age efficiently.
+### Extra Credit: How Multiple Patients with the Same Age Affects the Solution
+
+The existence of multiple patients with the same age complicates the binary search and range queries. Specifically, when multiple patients share the same age, binary search may return only the first occurrence. You would need to modify the search to find all occurrences of the age or handle ranges of patients with that age using `bisect_left` and `bisect_right`. This ensures all patients 
+in the same age group are accounted for in age-based queries.
+
 
 ---
 
