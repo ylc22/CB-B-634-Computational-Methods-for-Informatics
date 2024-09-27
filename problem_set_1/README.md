@@ -97,18 +97,31 @@ Gender Counts: Counter({'female': 165293, 'male': 158992, 'unknown': 72})
 Gender Categories: ['female', 'male', 'unknown']
 ```
 
-- **Gender Distribution**:
-  The dataset includes both male and female patients. A bar chart was plotted to show the distribution of genders. The categories used are "male" and "female."
+- **Gender Encoding**: In the dataset, gender is encoded as text values.
+- **Categories Used**: The two categories used are "male" and "female".
 
 ---
 
-### 1c. Sort Patients by Age (3 points)
+### 1c. Sort Patients by Age 
 
-- **Sorting Patients**:
-  The patients were sorted by age using Python’s built-in `sorted()` function. The result is a list where each patient is ordered by their age.
+```python
+# Sorting patients by age
+sorted_patients = sorted(patients, key=lambda x: x['age'])
+
+# Identify the oldest patient
+oldest_patient = sorted_patients[-1]
+
+# Output the oldest patient's details
+print("Oldest Patient:", oldest_patient)
+```
+
+**output**
+```python
+Oldest Patient: {'age': 84.99855742449432, 'gender': 'female', 'name': 'Monica Caponera'}
+```
 
 - **Oldest Patient**:
-  The oldest patient in the dataset is identified after sorting.
+  The oldest patient in the dataset is Monica Caponera.
 
 ---
 
