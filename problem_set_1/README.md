@@ -65,7 +65,37 @@ in the same age group are accounted for in age-based queries.
 
 ---
 
-### 1b. Plot Gender Distribution (3 points)
+### 1b. Plot Gender Distribution
+```python
+import matplotlib.pyplot as plt
+from collections import Counter
+
+# Extract the gender data
+genders = [patient['gender'] for patient in patients if patient['gender']]
+
+# Plotting the distribution of genders
+gender_counts = Counter(genders)
+
+# Plotting a bar chart for gender distribution
+plt.bar(gender_counts.keys(), gender_counts.values(), color=['blue', 'pink'])
+plt.title("Gender Distribution of Patients")
+plt.xlabel("Gender")
+plt.ylabel("Number of Patients")
+plt.show()
+
+# List the categories used in gender encoding
+gender_categories = list(gender_counts.keys())
+print("Gender Counts:", gender_counts)
+print("Gender Categories:", gender_categories)
+```
+**output**
+
+![image](https://github.com/user-attachments/assets/9099a9cf-3112-42a2-a290-8f0108584c53)
+
+```python
+Gender Counts: Counter({'female': 165293, 'male': 158992, 'unknown': 72})
+Gender Categories: ['female', 'male', 'unknown']
+```
 
 - **Gender Distribution**:
   The dataset includes both male and female patients. A bar chart was plotted to show the distribution of genders. The categories used are "male" and "female."
