@@ -636,6 +636,7 @@ for patient_id, initials in [(24601, "JV"), (42, "DA"), (7, "JB"), (143, "FR"), 
 
 ### 4b. Implement a `__contains__` Method
 
+```python
 class Tree:
     def __init__(self):
         self._value = None  # Key (e.g., patient_id)
@@ -690,6 +691,7 @@ False
 
 ### 4c. Implement and Test a `has_data` Method
 
+```python
 class Tree:
     def __init__(self):
         self._value = None  # Key (e.g., patient_id)
@@ -792,6 +794,7 @@ for size in sizes:
     random_patient_ids = [pid for pid, _ in random.sample(patient_data, min(100, size))]
     contains_times.append(time_contains(tree, random_patient_ids))
 ```
+
 ```python
 # Plot the results for above
 import matplotlib.pyplot as plt
