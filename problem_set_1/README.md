@@ -277,4 +277,66 @@ Number of male patients aged between 30 and 50: 42479
 ```
 The function `count_patients_in_age_gender_range` is correct because it uses binary search (`bisect_left`) to efficiently find the relevant age range, ensuring O(log n) time complexity for selecting the age range. It then filters the patients in that range by gender, accurately counting only those who match the specified criteria. The output is verified to be correct, as it matches the expected number of patients for the given age and gender conditions.
 
+---
+
+# Exercise 2: Computer Math as a Model of Math
+
+---
+
+### 2a. An Addition Surprise 
+
+```python
+2e16 + 1 == 2 * 10 ** 16 + 1
+```
+
+**output**
+`False`
+
+The cause of this behavior is floating-point precision limitations. Numbers that are significantly different in magnitude cannot always be represented accurately when added together. This leads to situations where small differences are ignored due to rounding, which results in counterintuitive behavior like 2e16 + 1 being equal to 2e16.
+
+This issue occurs because of how the IEEE 754 floating-point standard balances precision and range to represent both very large and very small numbers using 64 bits.
+
+### 2b. Sequences not converging to their limit
+
+```python
+import numpy as np
+import plotnine as p9
+import pandas as pd
+
+x0 = 3
+h = np.logspace(-10, 0)
+f = lambda x: x**3
+
+error = abs(((f(x0 + h) - f(x0)) / h) - 3 * x0**2)
+
+print (
+    p9.ggplot(pd.DataFrame({"h": h, f"abs error at {x0}": error}))
+    + p9.geom_line(p9.aes(x="h", y=f"abs error at {x0}"))
+    + p9.scale_x_log10()
+    + p9.scale_y_log10()
+)
+```
+
+**output**
+
+![image](https://github.com/user-attachments/assets/bc63cbc5-7724-47f1-8c01-ecf59f55c61a)
+
+- ### Why Logspace and Log-Log Axis are Used:
+- **Logarithmic scale**: `np.logspace` generates values of \( h \) spread across orders of magnitude, from \( 10^{-10} \) to 1. This helps in observing changes across very small to larger values.
+- **Log-log plot**: The log-log scale highlights exponential relationships, making it easier to visualize both very small and large errors as \( h \) changes.
+
+- ### What Happens as \( h \) Gets Smaller:
+As \( h \) decreases, the error initially decreases, as expected. But once \( h \) becomes very small (below \( 10^{-8} \)), the error starts to increase due to precision limitations.
+
+- ### Explanation of the Behavior:
+The increasing error at small \( h \) values is caused by **floating-point round-off errors**. When \( h \) is extremely small, numerical precision limits of floating-point arithmetic introduce significant inaccuracies.
+
+- ### Hypothesis on Why the Results Differ from Theory:
+The **finite precision** of floating-point numbers leads to errors when calculating differences with very small \( h \). Once \( h \) reaches values close to machine precision (around \( 10^{-16} \)), round-off errors dominate the calculations.
+
+- ### Evidence to Support the Hypothesis:
+The error begins increasing for \( h \) smaller than \( 10^{-8} \), which aligns with the precision limit of floating-point numbers (around \( 10^{-16} \)). This confirms that precision errors are responsible for the divergence from theoretical results.
+
+
+
 
