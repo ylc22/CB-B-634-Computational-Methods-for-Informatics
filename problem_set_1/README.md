@@ -872,7 +872,7 @@ plt.show()
 ![image](https://github.com/user-attachments/assets/477d8a12-d572-4642-98a7-8e5534cb1288)
 
 
-#### Discussion of Performance 
+#### Discussion of Performance (comparison)
 
 ##### `__contains__` Method:
 - The time complexity for the `__contains__` method is **O(log n)**, as expected for searching in a balanced binary search tree. As the number of elements (`n`) increases, the time taken to perform the `in` operation increases logarithmically.
