@@ -1,4 +1,7 @@
-# Exercise 1: Efficiently Search Patient Data
+# Problem Set 1 by Luis Chan
+
+---
+## Exercise 1: Efficiently Search Patient Data
 
 ## Objective:
 Analyze patient data from an XML file to gain insights into patient demographics. Organize the data to allow efficient O(log n) searches for patients of a given age.
