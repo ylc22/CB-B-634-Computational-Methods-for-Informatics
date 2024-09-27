@@ -187,22 +187,92 @@ The person is John Braswell.
 
 ---
 
-### 1f. Count Patients Above a Certain Age (2 points)
+### 1f. Count Patients Above a Certain Age 
 
-- **Counting Patients Above 41.5**:
-  Using arithmetic and the result of the binary search, the number of patients who are at least 41.5 years old was determined. This can be computed directly from the position returned by the binary search.
+```python
+from bisect import bisect_left
+
+def count_patients_above_age(patients, target_age):
+    # List of ages for binary search
+    ages = [patient['age'] for patient in patients]
+    
+    # Find the index where target_age should be inserted
+    index = bisect_left(ages, target_age)
+    
+    # Count how many patients are at or above the target age
+    return len(patients) - index
+
+# Count patients who are at least 41.5 years old
+count_above_41_5 = count_patients_above_age(sorted_patients, 41.5)
+
+count_above_41_5
+```
+**output**
+```python
+150471
+```
 
 ---
 
-### 1g. Function for Age Range Query (4 points)
+### 1g. Function for Age Range Query 
 
-- **Efficient Age Range Query**:
-  A function was written to return the number of patients who are at least `low_age` years old but strictly less than `high_age` years old in O(log n) time after initial sorting.
+```python
+from bisect import bisect_left, bisect_right
+
+def count_patients_in_age_range(patients, low_age, high_age):
+    # List of ages for binary search
+    ages = [patient['age'] for patient in patients]
+    
+    # Find the index where patients are at least low_age
+    low_index = bisect_left(ages, low_age)
+    
+    # Find the index where patients are strictly less than high_age
+    high_index = bisect_left(ages, high_age)  # high_age is exclusive
+    
+    # Count the number of patients within the range
+    return high_index - low_index
+
+# Test the function with an example range (30 to 50 years)
+age_range_count = count_patients_in_age_range(sorted_patients, 30, 50)
+
+print(f"Number of patients aged between 30 and 50: {age_range_count}")
+```
+
+**output**
+```python
+Number of patients aged between 30 and 50: 85714
+```
 
 ---
 
-### 1h. Function for Age and Gender Range Query (4 points)
+### 1h. Function for Age and Gender Range Query 
 
-- **Age and Gender Query**:
-  The previous function was modified to return the number of male patients in the specified age range, all in O(log n) time after initial data setup. This allows for efficient filtering by both age and gender.
+```python
+from bisect import bisect_left
+
+def count_patients_in_age_gender_range(patients, low_age, high_age, gender='male'):
+    # List of ages for binary search
+    ages = [patient['age'] for patient in patients]
+    
+    # Find the index where patients are at least low_age
+    low_index = bisect_left(ages, low_age)
+    
+    # Find the index where patients are strictly less than high_age
+    high_index = bisect_left(ages, high_age)
+    
+    # Count patients in the range who match the gender
+    gender_count = sum(1 for patient in patients[low_index:high_index] if patient['gender'] == gender)
+    
+    return gender_count
+
+# Test the function with an example range (30 to 50 years, for male patients)
+male_patients_in_range = count_patients_in_age_gender_range(sorted_patients, 30, 50, 'male')
+
+print(f"Number of male patients aged between 30 and 50: {male_patients_in_range}")
+```
+
+**output**
+```python
+Number of male patients aged between 30 and 50: 42479
+```
 
