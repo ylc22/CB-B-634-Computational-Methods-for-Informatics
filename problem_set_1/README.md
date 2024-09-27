@@ -445,27 +445,18 @@ for name, dataset in datasets.items():
 
 **Output**
 ```python
-import time
 
-# Run tests and measure time for different datasets
-datasets = {
-    "data1": data1(100),
-    "data2 (already sorted)": data2(100),
-    "data3 (reverse sorted)": data3(100)
-}
+Dataset: data1
+alg1 result: [20.204472832048545, 20.213040136936243, 20.27775999095576, 20.295935618820344, 20.44001633033436, 20.445173959305194, 20.65234381358303, 20.698073859463396, 20.908711658169402, 21.05868316994932]... (time: 0.00051 seconds)
+alg2 result: [20.204472832048545, 20.213040136936243, 20.27775999095576, 20.295935618820344, 20.44001633033436, 20.445173959305194, 20.65234381358303, 20.698073859463396, 20.908711658169402, 21.05868316994932]... (time: 0.00021 seconds)
 
-for name, dataset in datasets.items():
-    start_time = time.time()
-    result1 = alg1(dataset)
-    alg1_time = time.time() - start_time
+Dataset: data2 (already sorted)
+alg1 result: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]... (time: 0.00001 seconds)
+alg2 result: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]... (time: 0.00025 seconds)
 
-    start_time = time.time()
-    result2 = alg2(dataset)
-    alg2_time = time.time() - start_time
-
-    print(f"\nDataset: {name}")
-    print(f"alg1 result: {result1[:10]}... (time: {alg1_time:.5f} seconds)")
-    print(f"alg2 result: {result2[:10]}... (time: {alg2_time:.5f} seconds)")
+Dataset: data3 (reverse sorted)
+alg1 result: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]... (time: 0.00100 seconds)
+alg2 result: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]... (time: 0.00026 seconds)
 ```
 
 - **Hypothesis**:
