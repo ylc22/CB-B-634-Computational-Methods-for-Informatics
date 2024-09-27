@@ -598,8 +598,94 @@ plt.show()
 
 ---
 
+## Exercise 4: Implementing and Analyzing a Binary Search Tree as a Tool for Organizing Data
 
+---
 
+### 4a. Implement the `add` Method 
+
+```python
+class Tree:
+    def __init__(self):
+        self._value = None  # Key (e.g., patient_id)
+        self._data = None   # Data associated with the key (e.g., patient information)
+        self.left = None    # Left child
+        self.right = None   # Right child
+
+    def add(self, value, data):
+        # If the tree is empty, insert the first value and data
+        if self._value is None:
+            self._value = value
+            self._data = data
+        else:
+            # Recursively add to the left or right subtree
+            if value < self._value:
+                if self.left is None:
+                    self.left = Tree()  # Create a new Tree node
+                self.left.add(value, data)
+            elif value > self._value:
+                if self.right is None:
+                    self.right = Tree()  # Create a new Tree node
+                self.right.add(value, data)
+
+# Test the tree with sample data
+my_tree = Tree()
+for patient_id, initials in [(24601, "JV"), (42, "DA"), (7, "JB"), (143, "FR"), (8675309, "JNY")]:
+    my_tree.add(patient_id, initials)
+```
+
+### 4b. Implement a `__contains__` Method
+
+class Tree:
+    def __init__(self):
+        self._value = None  # Key (e.g., patient_id)
+        self._data = None   # Data associated with the key (e.g., patient information)
+        self.left = None    # Left child
+        self.right = None   # Right child
+
+    def add(self, value, data):
+        # If the tree is empty, insert the first value and data
+        if self._value is None:
+            self._value = value
+            self._data = data
+        else:
+            # Recursively add to the left or right subtree
+            if value < self._value:
+                if self.left is None:
+                    self.left = Tree()  # Create a new Tree node
+                self.left.add(value, data)
+            elif value > self._value:
+                if self.right is None:
+                    self.right = Tree()  # Create a new Tree node
+                self.right.add(value, data)
+
+    def __contains__(self, patient_id):
+        # Check if the patient_id matches the current node's value
+        if self._value == patient_id:
+            return True
+        # If the value is less, check the left subtree
+        elif self.left and patient_id < self._value:
+            return patient_id in self.left
+        # If the value is greater, check the right subtree
+        elif self.right and patient_id > self._value:
+            return patient_id in self.right
+        else:
+            return False
+
+# Test the tree with sample data
+my_tree = Tree()
+for patient_id, initials in [(24601, "JV"), (42, "DA"), (7, "JB"), (143, "FR"), (8675309, "JNY")]:
+    my_tree.add(patient_id, initials)
+
+# Test the __contains__ method using 'in'
+print(24601 in my_tree)  # Should return True
+print(1492 in my_tree)   # Should return False
+```
+
+**Output**
+`True
+False
+`
 
 
 
