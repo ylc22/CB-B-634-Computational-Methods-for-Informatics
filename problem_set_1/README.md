@@ -526,6 +526,7 @@ plt.show()
 ```
 
 **Output**
+
 ![image](https://github.com/user-attachments/assets/3b448786-7315-4e79-9045-392fe17c2864)
 
 `alg1` (Bubble Sort): The graph shows a time complexity of approximately O(n²). This is evident as a steep upward slope on the log-log plot as n increases.
@@ -556,6 +557,7 @@ plt.show()
 ```
 
 **Output**
+
 ![image](https://github.com/user-attachments/assets/4f456656-bf1a-44f4-aa81-2102afc3867e)
 
 ### Timing and Plotting for `data3`
@@ -582,6 +584,7 @@ plt.show()
 ```
 
 **Output**
+
 ![image](https://github.com/user-attachments/assets/ed474a82-7ff4-4c3b-8a30-7e8b707f5b72)
 
 ### 3d. Conclusions and Recommendations 
