@@ -353,6 +353,122 @@ print (
 
 - The increase in error for \( h \) values smaller than \( 10^{-8} \) aligns with the precision limits of floating-point numbers (approximately \( 10^{-16} \)). This strongly supports the hypothesis that precision errors are responsible for the deviation from the expected results.
 
+---
+
+## Exercise 3: Algorithm Analysis and Performance Measurement
+
+---
+
+### 3a. Hypothesize the Operation 
+
+```python
+# Algorithms from the question
+def alg1(data):
+    data = list(data)
+    changes = True
+    while changes:
+        changes = False
+        for i in range(len(data) - 1):
+            if data[i + 1] < data[i]:
+                data[i], data[i + 1] = data[i + 1], data[i]
+                changes = True
+    return data
+
+def alg2(data):
+    if len(data) <= 1:
+        return data
+    else:
+        split = len(data) // 2
+        left = iter(alg2(data[:split]))
+        right = iter(alg2(data[split:]))
+        result = []
+        left_top = next(left)
+        right_top = next(right)
+        while True:
+            if left_top < right_top:
+                result.append(left_top)
+                try:
+                    left_top = next(left)
+                except StopIteration:
+                    return result + [right_top] + list(right)
+            else:
+                result.append(right_top)
+                try:
+                    right_top = next(right)
+                except StopIteration:
+                    return result + [left_top] + list(left)
+
+# Test datasets
+def data1(n, sigma=10, rho=28, beta=8/3, dt=0.01, x=1, y=1, z=1):
+    import numpy as np
+    state = np.array([x, y, z], dtype=float)
+    result = []
+    for _ in range(n):
+        x, y, z = state
+        state += dt * np.array([
+            sigma * (y - x),
+            x * (rho - z) - y,
+            x * y - beta * z
+        ])
+        result.append(float(state[0] + 30))
+    return result
+
+def data2(n):
+    return list(range(n))
+
+def data3(n):
+    return list(range(n, 0, -1))
+```
+```python
+import time
+
+# Run tests and measure time for different datasets
+datasets = {
+    "data1": data1(100),
+    "data2 (already sorted)": data2(100),
+    "data3 (reverse sorted)": data3(100)
+}
+
+for name, dataset in datasets.items():
+    start_time = time.time()
+    result1 = alg1(dataset)
+    alg1_time = time.time() - start_time
+
+    start_time = time.time()
+    result2 = alg2(dataset)
+    alg2_time = time.time() - start_time
+
+    print(f"\nDataset: {name}")
+    print(f"alg1 result: {result1[:10]}... (time: {alg1_time:.5f} seconds)")
+    print(f"alg2 result: {result2[:10]}... (time: {alg2_time:.5f} seconds)")
+```
+
+**Output**
+`import time
+
+# Run tests and measure time for different datasets
+datasets = {
+    "data1": data1(100),
+    "data2 (already sorted)": data2(100),
+    "data3 (reverse sorted)": data3(100)
+}
+
+for name, dataset in datasets.items():
+    start_time = time.time()
+    result1 = alg1(dataset)
+    alg1_time = time.time() - start_time
+
+    start_time = time.time()
+    result2 = alg2(dataset)
+    alg2_time = time.time() - start_time
+
+    print(f"\nDataset: {name}")
+    print(f"alg1 result: {result1[:10]}... (time: {alg1_time:.5f} seconds)")
+    print(f"alg2 result: {result2[:10]}... (time: {alg2_time:.5f} seconds)")`
+
+- **Hypothesis**:
+  - `alg1`: This algorithm behaves like a **bubble sort**. It repeatedly scans the list and swaps adjacent elements if they are out of order. This continues until no more swaps are needed, resulting in O(n²) time complexity.
+  - `alg2`: This algorithm resembles **merge sort**. It recursively splits the list into two halves, sorts them individually, and merges the sorted halves. The time complexity is O(n log n).
 
 
 
