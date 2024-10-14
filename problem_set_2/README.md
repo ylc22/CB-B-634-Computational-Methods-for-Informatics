@@ -1743,7 +1743,9 @@ embeddings_list = [embeddings[pmid] for pmid in papers.keys()]
 ```
 
 **Output**
+```python
 100%|██████████| 100/100 [00:28<00:00,  3.51it/s]
+```
 
 ## Carry out PCA now
 
