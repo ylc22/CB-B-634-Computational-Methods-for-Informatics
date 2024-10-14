@@ -1,6 +1,6 @@
-# Spelling Correction Using a Bloom Filter
+# Problem Set 2 - Luis Chan
 
-## Objective
+## Exercise 1: Spelling Correction Using a Bloom Filter 
 
 This project implements a **Bloom Filter** from scratch to identify words with single-character typos, simulating a basic spelling correction system. The goal is to explore the trade-offs between Bloom filter size and the number of hash functions, balancing false positives and accurate suggestions.
 
