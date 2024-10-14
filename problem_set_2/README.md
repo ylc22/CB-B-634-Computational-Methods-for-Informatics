@@ -61,7 +61,7 @@ else:
     print(f"'{word_to_check}' is definitely not in the list.")
 ```
 
-** Output
+**Output**
 ```python 
 'example' might be in the list.
 ```
@@ -128,7 +128,7 @@ performance = evaluate_performance(typos_data)
 # Output the performance result
 print(f"Performance: {performance:.2f}%")
 ```
-** Output
+**Output**
 ```python
 Performance: 2.06%
 ```
@@ -216,6 +216,7 @@ plt.grid(True)
 plt.title('Effect of Bloom Filter Size and Number of Hash Functions')
 plt.show()
 ```
+![image](https://github.com/user-attachments/assets/303b680c-d8b1-4103-a74a-940ceeccc981)
 
 
 Based on the plot generated, we can observe that the number of bits required to achieve 85% good suggestions depends on the number of hash functions used. For the case with one hash function, represented by the orange line, approximately \(10^6\) bits in the Bloom filter are necessary to reach the desired 85% accuracy for good suggestions. Similarly, when using two hash functions, indicated by the red line, around \(10^6\) bits are also sufficient to achieve 85% good suggestions. Lastly, for the scenario with three hash functions, shown by the brown line, we again see that approximately \(10^6\) bits are required to reach the same performance threshold.
