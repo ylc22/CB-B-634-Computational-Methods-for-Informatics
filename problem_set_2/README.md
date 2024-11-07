@@ -184,7 +184,6 @@ results = {
 }
 
 # Simulated data for evaluation
-# Note: You can replace this with the actual evaluation function that uses the typos dataset
 def evaluate_performance(size, num_hashes):
     # For now, simulate values between 0 and 100 for demo purposes
     np.random.seed(size + num_hashes)  # Ensure reproducible results
