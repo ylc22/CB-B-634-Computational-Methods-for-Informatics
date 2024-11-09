@@ -348,5 +348,137 @@ Overall, this exercise demonstrated the importance of both parameter selection a
 
 
 
+# Exercise 4: Interactive web exploration of data set
 
+
+### Explanation of Each File and Their Interconnections
+
+1. **server.py**:
+   - **Purpose**: This is the main server script that powers the Flask web application. It sets up the Flask app, handles routing, and defines the logic for the web interactions.
+   - **Key Components**:
+     - `@app.route("/")`: Defines the root route (`"/"`) of the website. When users access the homepage, it renders the `index.html` template.
+     - `@app.route("/analyze", methods=["POST"])`: Sets up a route for handling text input submitted by the user. When a POST request is sent to `/analyze`, the `analyze` function is triggered.
+     - `analyze()` function: This function extracts the text submitted by the user from the form, counts each character using `Counter`, and formats the analysis results. It then renders `analyze.html`, passing the original text and analysis as context.
+   - **Execution**: `if __name__ == "__main__": app.run(debug=True)` starts the Flask application in debug mode when `server.py` is executed directly.
+
+2. **index.html**:
+   - **Purpose**: This is the main landing page for the web application. It displays a form with a text area where users can input text for analysis.
+   - **Key Components**:
+     - `<form action="/analyze" method="POST">`: Sends the form data to the `/analyze` route using the POST method. This connects `index.html` to the `analyze` function in `server.py`.
+     - `<textarea name="usertext">`: Text area where users enter their text for analysis, which will be accessible in `server.py` via `request.form["usertext"]`.
+
+3. **analyze.html**:
+   - **Purpose**: This template displays the results of the analysis back to the user.
+   - **Key Components**:
+     - `{{ usertext }}`: Displays the original text submitted by the user.
+     - `{{ analysis }}`: Shows the character frequency analysis generated in the `analyze` function.
+   - **Interconnection**: This file is rendered by `server.py` after processing the user's text and passing the analysis as variables for display.
+
+### Key Parts for Making the Server Work
+
+- **Flask Routing (`@app.route`)**: Defines how the application responds to different URL paths ("/" and "/analyze").
+- **Template Rendering**: `render_template` is essential for loading HTML files (`index.html` and `analyze.html`) as responses to user requests.
+- **POST Method**: Allows data to be submitted and processed by Flask via form submission in `index.html`.
+- **Counter in analyze()**: This functionality in `server.py` performs the actual text analysis, essential for generating the output displayed in `analyze.html`.
+
+
+
+The dataset contains the following columns:
+
+- **Country**: Name of the country.
+- **Region**: Geographical region of the country.
+- **Happiness Rank**: Ranking based on the happiness score.
+- **Happiness Score**: Overall happiness score.
+- **Standard Error**: Standard error of the happiness score.
+- **Economy (GDP per Capita)**, **Family**, **Health (Life Expectancy)**, **Freedom**, **Trust (Government Corruption)**, **Generosity**: Various socio-economic factors contributing to the happiness score.
+- **Dystopia Residual**: A residual score for each country to ensure comparability.
+
+
+# My Question
+
+"**What is the happiness score and rank of a given country, along with key socio-economic factors?**"
+
+#### Explanation:
+1. **Input**:
+   - The user inputs the **country name**.
+
+2. **Output**:
+   - The output will include:
+     - The **happiness score** and **happiness rank** of the specified country.
+     - Key socio-economic factors such as **GDP per capita**, **Family**, **Life Expectancy**, **Freedom**, **Trust in Government**, and **Generosity**.
+
+3. **Response Determination**:
+   - The response will be determined by filtering the dataset for the specified country and retrieving the corresponding values for happiness score, rank, and other factors.
+
+
+
+
+# NOTE : Please refer to project_folder_ex4
+
+
+
+### Project Conclusion
+
+In this project, we created an interactive website using Flask that allows users to explore the World Happiness Report dataset by country. Users can enter a country's name, and the website retrieves and displays relevant happiness data, including happiness score, rank, and socio-economic factors like GDP per capita, family support, life expectancy, freedom, trust, and generosity. 
+
+The project includes the following components:
+
+1. **Flask Application**: 
+   - A simple yet functional web application built with Flask.
+   - The application processes user input, performs data lookup in the dataset, and dynamically displays results on a separate page.
+   - Code adapts to user inputs and returns meaningful messages if no data is found.
+
+2. **Screenshots in README**:
+   - Each stage of the process should be documented with screenshots:
+     - **Input Stage**: Screenshot of the homepage (`index.html`) where users enter a country name.
+     - **Result Display**: Screenshot of the result page (`result.html`) showing the happiness information.
+     - **Error Handling**: Screenshot of error messages if an invalid country name is entered.
+
+3. **Extra Credit Enhancements**:
+   - **Error Handling**: Graceful handling of invalid or unrecognized country names, with clear error messages on the result page.
+   - **CSS Styling**: A simple and clean CSS file is added to style the website, providing a visually appealing experience.
+   - **Relevant Static Image**: Optionally, you could add a world map image or other happiness-related visuals on the homepage for added context.
+   - **Multiple Analyses**: In addition to the happiness score and rank, we included key socio-economic factors, providing users with more context for each country's happiness ranking.
+
+### Folder Structure
+
+The project folder is structured as follows:
+
+```plaintext
+project_folder/
+├── static/
+│   └── style.css          # CSS file for styling
+├── templates/
+│   ├── index.html         # Main page with input form
+│   ├── result.html        # Result display page showing happiness data and/or errors
+├── server.py              # Main Flask application with data processing logic
+└── happiness_data.csv     # World Happiness dataset used for data lookup
+```
+
+### Running the Application
+
+1. **Navigate to Project Directory**: 
+   Open a terminal, navigate to the project folder, and activate a virtual environment if needed.
+
+2. **Install Flask and Pandas**:
+   Make sure to install `Flask` and `pandas` by running:
+   ```bash
+   pip install Flask pandas
+3. run `python server.py`
+4. Open your web browser and go to http://127.0.0.1:5001 to interact with the application.
+   
+![Screenshot 2024-11-08 at 11 07 20 PM](https://github.com/user-attachments/assets/8d6a6a0e-a89e-43db-817f-bf4a0406dd46)
+
+![Screenshot 2024-11-08 at 11 07 27 PM](https://github.com/user-attachments/assets/5adfadc9-53f1-4ad3-833f-8c7e1cda91ab)
+
+![Screenshot 2024-11-08 at 11 07 20 PM](https://github.com/user-attachments/assets/f5f2311a-bdda-4a2c-8cf1-dabd6d44a354)
+
+![Screenshot 2024-11-08 at 11 07 43 PM](https://github.com/user-attachments/assets/61d09f4a-4934-4751-910d-4c87a8171523)
+
+
+
+
+
+
+   
 
