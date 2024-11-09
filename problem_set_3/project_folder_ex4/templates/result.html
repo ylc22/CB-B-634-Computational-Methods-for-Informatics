@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Happiness Information Result</title>
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+</head>
+<body>
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% else %}
+        <h1>Happiness Information for {{ country }}</h1>
+        <p><strong>Happiness Rank:</strong> {{ rank }}</p>
+        <p><strong>Happiness Score:</strong> {{ score }}</p>
+        <p><strong>Economy (GDP per Capita):</strong> {{ gdp }}</p>
+        <p><strong>Family:</strong> {{ family }}</p>
+        <p><strong>Health (Life Expectancy):</strong> {{ health }}</p>
+        <p><strong>Freedom:</strong> {{ freedom }}</p>
+        <p><strong>Trust (Government Corruption):</strong> {{ trust }}</p>
+        <p><strong>Generosity:</strong> {{ generosity }}</p>
+    {% endif %}
+    <a href="/">Go Back</a>
+</body>
+</html>
