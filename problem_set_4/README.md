@@ -94,7 +94,7 @@ seq1, seq2, score = smith_waterman('GGTT', 'TTGG', match=5, gap_penalty=2, misma
 print(f"Test 6 (Match=5, Gap penalty=2, Mismatch penalty=0):\nSeq1: {seq1}\nSeq2: {seq2}\nScore: {score}\n")
 ```
 
-** Output **
+**Output**
 
 ```python
 Example 1 (Default params):
