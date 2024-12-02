@@ -1,4 +1,4 @@
-# CB7B 634 Problem Set 4 by Luis Chan
+# CB&B 634 Problem Set 4 by Luis Chan
 
 ## Exercise 1: Sequence Alignment
 
