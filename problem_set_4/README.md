@@ -1,4 +1,6 @@
-# Exercise 1: Sequence Alignment
+# CB7B 634 Problem Set 4 by Luis Chan
+
+## Exercise 1: Sequence Alignment
 
 ```python
 import numpy as np
