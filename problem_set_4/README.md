@@ -422,8 +422,8 @@ for k, cm in results.items():
 ```
 
 **Output**
-```python
-Confusion Matrix for k=1:
+
+`Confusion Matrix for k=1:
 Predicted  Cammeo  Osmancik
 Actual                     
 Cammeo        299        51
@@ -433,9 +433,8 @@ Confusion Matrix for k=5:
 Predicted  Cammeo  Osmancik
 Actual                     
 Cammeo        319        31
-Osmancik       34       378
+Osmancik       34       378`
 
-```
 
 # Textual-walkthough and Answers to the Explanation Questions
 
