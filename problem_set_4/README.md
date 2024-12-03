@@ -333,7 +333,6 @@ plt.legend()
 plt.show()
 ```
 
-**Output**
 ![image](https://github.com/user-attachments/assets/24fdc19f-1409-4c7a-bb55-39a2b29739f7)
 
 
