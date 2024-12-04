@@ -1,6 +1,6 @@
 # CB&B 634 Problem Set 4 by Luis Chan
 
-## Exercise 1: Sequence Alignment
+# Exercise 1: Sequence Alignment
 
 ```python
 import numpy as np
@@ -140,9 +140,9 @@ Seq2: GG
 Score: 10
 ```
 
-# Explanation of Tests and Conclusion
+## Explanation of Tests and Conclusion
 
-## How Tests Show the Function Works
+### How Tests Show the Function Works
 
 The implementation of the Smith-Waterman algorithm has been rigorously tested using a variety of inputs and scoring parameters. Here's how the tests demonstrate the correctness of the function:
 
@@ -161,7 +161,7 @@ The implementation of the Smith-Waterman algorithm has been rigorously tested us
 3. **Consistency Across Tests**:
    - The scoring logic and traceback mechanism were consistent across all tests. All outputs adhered to the rules of the Smith-Waterman algorithm for local alignment.
 
-## Conclusion
+### Conclusion
 
 The implementation of the Smith-Waterman algorithm successfully:
 - Calculates the optimal local alignment between two sequences.
@@ -440,28 +440,28 @@ Osmancik       34       378
 ```
 
 
-# Textual-walkthough and Answers to the Explanation Questions
+## Textual-walkthough and Answers to the Explanation Questions
 
-## 1. Data Preprocessing
+### 1. Data Preprocessing
 
-### Normalization
+#### Normalization
 The dataset contains seven quantitative features: Area, Perimeter, Major_Axis_Length, Minor_Axis_Length, Eccentricity, Convex_Area, and Extent. These features were normalized to have a mean of 0 and a standard deviation of 1. This ensures that all features contribute equally to the distance calculations in the k-nearest neighbors classifier, avoiding bias toward features with larger scales.
 
-### PCA Reduction
+#### PCA Reduction
 The normalized data was reduced to two dimensions using Principal Component Analysis (PCA). The first two principal components explain the majority of the variance in the dataset, providing a meaningful 2D representation of the data for classification. These two components serve as the x and y coordinates for the k-nearest neighbors analysis.
 
 ---
 
-## 2. Scatter Plot of PCA Components (4 points question)
+### 2. Scatter Plot of PCA Components (4 points question)
 
 The scatter plot of the two principal components, color-coded by rice type ("Cammeo" and "Osmancik"), shows clear clustering of the two classes. However, there is some overlap between the clusters, especially near the boundaries. This overlap suggests that while k-nearest neighbors can generally separate the two classes effectively, misclassifications may occur in the regions where the two classes are not well-separated.
 
-### *Graph Interpretation*
+#### *Graph Interpretation*
 The scatter plot suggests that k-nearest neighbors is a reasonable choice for classifying this data in its 2D PCA-reduced form. However, the regions of overlap indicate potential limitations in perfect classification, particularly when using a smaller \(k\) value (e.g., \(k=1\)) that is more prone to overfitting.
 
 ---
 
-## 3. k-Nearest Neighbors Implementation
+### 3. k-Nearest Neighbors Implementation
 
 The k-nearest neighbors classifier was implemented using a QuadTree structure for efficient spatial indexing. The QuadTree divides the 2D space into regions and enables fast retrieval of the k-nearest neighbors for any given point. 
 
@@ -469,11 +469,11 @@ Given a new (x, y) point, the QuadTree identifies the k closest points using Euc
 
 ---
 
-## 4. Confusion Matrices for \(k=1\) and \(k=5\)
+### 4. Confusion Matrices for \(k=1\) and \(k=5\)
 
 Using an 80/20 train-test split, the classifier's performance was evaluated with confusion matrices for \(k=1\) and \(k=5\).
 
-### Confusion Matrix for \(k=1\)
+#### Confusion Matrix for \(k=1\)
 | Predicted  | Cammeo | Osmancik |
 |------------|--------|----------|
 | **Actual** Cammeo  | 299    | 51       |
@@ -481,7 +481,7 @@ Using an 80/20 train-test split, the classifier's performance was evaluated with
 
 For \(k=1\), the classifier performs well overall, correctly classifying the majority of both classes. However, it makes 51 false positives for "Osmancik" and 31 false negatives for "Cammeo." This suggests that while \(k=1\) captures local patterns effectively, it can misclassify points near the class boundaries.
 
-### Confusion Matrix for \(k=5\)
+#### Confusion Matrix for \(k=5\)
 | Predicted  | Cammeo | Osmancik |
 |------------|--------|----------|
 | **Actual** Cammeo  | 319    | 31       |
@@ -491,7 +491,7 @@ For \(k=5\), the classifier improves slightly, reducing false positives for "Osm
 
 ---
 
-## 5. *Interpretation of Confusion Matrices* (4 points question)
+### 5. *Interpretation of Confusion Matrices* (4 points question)
 
 - **Effectiveness**: Both \(k=1\) and \(k=5\) perform well, achieving high accuracy for both classes. However, \(k=5\) offers slightly better generalization, as it reduces sensitivity to noise by considering a larger neighborhood.
 - **Trade-offs**: While \(k=1\) captures fine-grained local patterns, it is more prone to overfitting. On the other hand, \(k=5\) sacrifices some sensitivity to noise for more robust predictions in overlapping regions.
@@ -499,7 +499,7 @@ For \(k=5\), the classifier improves slightly, reducing false positives for "Osm
 
 ---
 
-## Summary
+### Summary
 
 - The data was normalized and reduced to two dimensions using PCA.
 - A scatter plot showed that the two rice types form distinct but slightly overlapping clusters in the reduced space.
