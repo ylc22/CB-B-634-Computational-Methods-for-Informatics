@@ -452,7 +452,7 @@ The normalized data was reduced to two dimensions using Principal Component Anal
 
 ---
 
-### 2. Scatter Plot of PCA Components (4 points question)
+### 2. Scatter Plot of PCA Components (My answer to the 4 points question explicitly mentioned)
 
 The scatter plot of the two principal components, color-coded by rice type ("Cammeo" and "Osmancik"), shows clear clustering of the two classes. However, there is some overlap between the clusters, especially near the boundaries. This overlap suggests that while k-nearest neighbors can generally separate the two classes effectively, misclassifications may occur in the regions where the two classes are not well-separated.
 
@@ -491,7 +491,7 @@ For \(k=5\), the classifier improves slightly, reducing false positives for "Osm
 
 ---
 
-### 5. *Interpretation of Confusion Matrices* (4 points question)
+### 5. *Interpretation of Confusion Matrices* (My answer to the 4 points question explicitly mentioned)
 
 - **Effectiveness**: Both \(k=1\) and \(k=5\) perform well, achieving high accuracy for both classes. However, \(k=5\) offers slightly better generalization, as it reduces sensitivity to noise by considering a larger neighborhood.
 - **Trade-offs**: While \(k=1\) captures fine-grained local patterns, it is more prone to overfitting. On the other hand, \(k=5\) sacrifices some sensitivity to noise for more robust predictions in overlapping regions.
