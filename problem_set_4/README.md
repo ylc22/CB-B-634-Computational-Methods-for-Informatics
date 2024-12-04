@@ -170,6 +170,8 @@ The implementation of the Smith-Waterman algorithm successfully:
 
 
 
+----
+
 # Exercise 2. k-nearest neighbors of rice
 
 ```python
