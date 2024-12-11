@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workplace Mental Health Analysis</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #result {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            background-color: #f9f9f9;
+            overflow-x: auto;
+        }
+        select, button {
+            margin: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        img {
+            max-width: 100%;
+            margin-top: 20px;
+        }
+        .confusion-matrix {
+            display: grid;
+            grid-template-columns: repeat(2, 100px);
+            gap: 10px;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Workplace Mental Health Analysis</h1>
+    <label for="analysis">Select Analysis:</label>
+    <select id="analysis">
+        <option value="summary">Summary Statistics</option>
+        <option value="correlation">Correlation Matrix</option>
+        <option value="sentiment_analysis">Sentiment Analysis</option>
+        <option value="geographical_trends">Geographical Trends</option>
+        <option value="logistic_regression">Logistic Regression</option>
+    </select>
+    <button id="run-analysis">Run Analysis</button>
+    
+    <div id="result">Results will appear here.</div>
+
+    <script>
+        $(document).ready(function () {
+            $('#run-analysis').click(function () {
+                const analysis = $('#analysis').val();
+
+                if (analysis === 'sentiment_analysis' || analysis === 'geographical_trends') {
+                    const imgUrl = `/${analysis}`;
+                    $('#result').html(`<img src="${imgUrl}" alt="${analysis} Image">`);
+                } else {
+                    $.ajax({
+                        url: `/${analysis}`,
+                        method: analysis === 'logistic_regression' ? 'POST' : 'GET',
+                        contentType: 'application/json',
+                        success: function (response) {
+                            if (analysis === 'correlation') {
+                                displayCorrelationTable(response);
+                            } else if (analysis === 'summary') {
+                                displaySummaryTable(response);
+                            } else if (analysis === 'logistic_regression') {
+                                displayLogisticRegression(response);
+                            }
+                        },
+                        error: function () {
+                            $('#result').html('Error: Could not fetch the data.');
+                        }
+                    });
+                }
+            });
+
+            function displaySummaryTable(data) {
+                let table = '<table><tr><th>Variable</th><th>Statistic</th><th>Value</th></tr>';
+                for (const [key, stats] of Object.entries(data)) {
+                    for (const [stat, value] of Object.entries(stats)) {
+                        table += `<tr><td>${key}</td><td>${stat}</td><td>${value}</td></tr>`;
+                    }
+                }
+                table += '</table>';
+                $('#result').html(table);
+            }
+
+            function displayCorrelationTable(data) {
+                let table = '<table><tr><th>Variable</th>';
+                const headers = Object.keys(data);
+                headers.forEach(header => {
+                    table += `<th>${header}</th>`;
+                });
+                table += '</tr>';
+                headers.forEach(row => {
+                    table += `<tr><td>${row}</td>`;
+                    headers.forEach(col => {
+                        table += `<td>${(data[row][col] || 0).toFixed(3)}</td>`;
+                    });
+                    table += '</tr>';
+                });
+                table += '</table>';
+                $('#result').html(table);
+            }
+
+            function displayLogisticRegression(data) {
+                let report = '<h3>Classification Report</h3><table><tr><th>Class</th><th>Precision</th><th>Recall</th><th>F1-Score</th><th>Support</th></tr>';
+                for (const [key, metrics] of Object.entries(data.classification_report)) {
+                    if (typeof metrics === 'object') {
+                        report += `<tr><td>${key}</td><td>${metrics.precision.toFixed(2)}</td><td>${metrics.recall.toFixed(2)}</td><td>${metrics['f1-score'].toFixed(2)}</td><td>${metrics.support}</td></tr>`;
+                    }
+                }
+                report += '</table>';
+
+                let confusion = '<h3>Confusion Matrix</h3><div class="confusion-matrix">';
+                data.confusion_matrix.forEach(row => {
+                    row.forEach(cell => {
+                        confusion += `<div>${cell}</div>`;
+                    });
+                });
+                confusion += '</div>';
+
+                $('#result').html(report + confusion);
+            }
+        });
+    </script>
+</body>
+</html>
