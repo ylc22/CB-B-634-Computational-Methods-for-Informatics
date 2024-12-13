@@ -366,22 +366,130 @@ This preprocessing step involved standardizing, cleaning, and enhancing the *Wor
 3. **Gender Diversity**:
    - The dataset contained a wide variety of gender responses, which were consolidated to simplify analysis while retaining inclusivity.
 
----
 
-## **Next Steps**
 
-### **1. Data Analysis**
-- Perform detailed analyses, including:
-  - Correlation analysis between stigma and employer support.
-  - Logistic regression to predict treatment-seeking behavior.
-  - Sentiment analysis on open-ended comments.
 
-### **2. Web Interface Development**
-- Create a Flask API to serve analysis results.
-- Develop a web interface to allow users to select analyses, input parameters, and visualize results.
 
-### **3. Visualization**
-- Generate graphs such as heatmaps, ROC curves, and choropleth maps to illustrate findings.
 
-### **4. Report and Presentation**
-- Document findings and present the analysis through a clear, concise 15-minute presentation.
+-------
+
+
+
+
+
+
+# Analysis
+
+## Issues with Summary Statistics (5 Points)
+
+The summary statistics provided insights into the general trends of the dataset, such as the average age of respondents, the distribution of stigma scores, and employer support scores. However, several issues were identified:
+
+1. **Skewed Distributions**:  
+   Some numerical features, such as `age`, exhibited skewness due to outliers. For example, a few respondents reported extreme ages (e.g., very young or very old), which could distort the mean.
+
+2. **Categorical Variables**:  
+   Summary statistics for categorical variables (e.g., `gender`, `self_employed`, `family_history`) were limited in usefulness. Basic counts and modes provided only a surface-level understanding, and deeper insights required further analysis.
+
+3. **Imbalanced Data**:  
+   The dataset had imbalances in certain categories, such as more respondents identifying as male, which could affect analyses like logistic regression.
+
+4. **Missing Values**:  
+   Missing data in fields like `coworkers` and `supervisor` needed careful handling to avoid bias in subsequent analyses.
+
+## Discuss the Analyses You Chose to Run (20 Points)
+
+### 1. Correlation Analysis
+
+**Why This Question? (5 Points)**  
+Understanding the relationships between different numerical features (e.g., `stigma_score`, `employer_support_score`, `age`) helps identify potential factors influencing mental health support in the workplace. This can inform strategies for improving mental health outcomes in the tech industry.
+
+**What Were the Results? (15 Points)**  
+The correlation analysis revealed the following key insights:
+
+- **Employer Support Score and Mental Health Consequence**: A negative correlation (-0.24) indicates that higher employer support is associated with fewer negative mental health consequences.
+- **Stigma Score and Seeking Help**: A moderate negative correlation (-0.26) suggests that higher stigma scores are associated with a lower likelihood of seeking mental health support.
+- **Age and Stigma Score**: A slight negative correlation (-0.06) indicates that older respondents reported slightly lower stigma scores.
+
+These correlations were visualized in a heatmap, making it easier to identify strong and weak relationships between variables.
+
+### 2. Logistic Regression
+
+**Why This Question? (5 Points)**  
+Logistic regression was used to predict whether a respondent would seek mental health treatment (`treatment`) based on features such as `age`, `gender`, `stigma_score`, and `employer_support_score`. This analysis helps identify the most influential factors in predicting mental health treatment.
+
+**What Were the Results? (15 Points)**  
+The logistic regression model provided the following insights:
+
+- **Model Coefficients**:  
+  - `stigma_score`: Negative coefficient, indicating that higher stigma reduces the likelihood of seeking treatment.
+  - `employer_support_score`: Positive coefficient, indicating that better employer support increases the likelihood of seeking treatment.
+- **Intercept**: The baseline probability of seeking treatment when all predictors are at zero.
+
+The model was validated using a classification report (precision, recall, F1-score) and a confusion matrix to assess performance. The accuracy was reasonable, but some misclassifications occurred, likely due to the imbalanced dataset.
+
+### 3. Geographical Trends
+
+**Why This Question? (5 Points)**  
+Analyzing geographical trends helps identify how mental health support varies across different regions. This can inform location-specific interventions to improve workplace mental health.
+
+**What Were the Results? (15 Points)**  
+The analysis revealed that the majority of respondents were from the **United States**, followed by **Canada** and the **United Kingdom**. The geographical distribution was visualized in a bar chart, showing the number of responses per country.
+
+This analysis highlighted that mental health support and stigma might vary significantly based on location, indicating a need for region-specific mental health policies.
+
+### 4. Sentiment Analysis
+
+**Why This Question? (5 Points)**  
+Sentiment analysis was conducted on the `comments` field to understand the overall sentiment of the respondents' open-ended feedback. This helps capture qualitative insights that are not evident from numerical data.
+
+**What Were the Results? (15 Points)**  
+The sentiment analysis classified comments into **positive**, **neutral**, and **negative** categories. The results showed:
+
+- **Positive Sentiment**: 40% of comments expressed satisfaction with workplace mental health support.
+- **Neutral Sentiment**: 35% of comments were neutral.
+- **Negative Sentiment**: 25% of comments highlighted dissatisfaction or issues with mental health support.
+
+These results were visualized in a pie chart, providing a clear breakdown of sentiment categories.
+
+## Any Surprises? (3 Points)
+
+1. **Low Correlation Between Age and Mental Health Outcomes**:  
+   It was surprising to see that age had minimal impact on mental health outcomes, suggesting that workplace culture and support systems play a more significant role.
+
+2. **High Stigma in Tech Workplaces**:  
+   Despite being an industry known for innovation, stigma around mental health remains prevalent in tech workplaces.
+
+3. **Regional Differences**:  
+   Mental health support varied widely by region, with some countries showing significantly higher levels of support than others.
+
+## Validation of Analyses (3 Points)
+
+1. **Cross-Validation**:  
+   The logistic regression model was validated using cross-validation to ensure robustness.
+
+2. **Classification Report**:  
+   The classification report (precision, recall, F1-score) helped evaluate the performance of the logistic regression model.
+
+3. **Visual Inspection**:  
+   Correlation matrices and geographical plots were inspected to ensure the results made logical sense and were not driven by outliers or errors.
+
+## Do More Than Just Summary Statistics (3 Points)
+
+The project went beyond summary statistics by performing:
+
+1. **Correlation Analysis**
+2. **Logistic Regression**
+3. **Geographical Trends Analysis**
+4. **Sentiment Analysis**
+
+These analyses provided deeper insights into the dataset and allowed for predictive modeling and visualization.
+
+## Two Analyses That Generate Graphs (3 Points)
+
+1. **Correlation Analysis**: Heatmap of the correlation matrix.
+2. **Geographical Trends**: Bar chart of responses by country.
+
+## At Least One Analysis That Takes a Parameter (3 Points)
+
+**Logistic Regression**: This analysis allowed users to specify the target variable (`treatment`) and a set of features (e.g., `age`, `stigma_score`, `employer_support_score`) as parameters. The model's output varied depending on the selected features, making it flexible and interactive.
+
