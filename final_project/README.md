@@ -1421,6 +1421,155 @@ The sentiment analysis highlights critical areas of concern and potential opport
 
 
 
+# Web Backend and Frontend
+
+## Server API (5 Points)
+
+The backend for this project is built using **Flask**, a lightweight web framework for Python. The backend provides several API endpoints that handle different types of analyses on the workplace mental health dataset. The server API routes are defined in the `app.py` file and include the following endpoints:
+
+### API Endpoints
+
+1. **`/correlation` (GET)**  
+   - **Description**: Computes the correlation matrix for numerical features in the dataset.
+   - **Response**: Returns a JSON object containing the correlation matrix.
+   - **Example Response**:
+     ```json
+     {
+       "stigma_score": {"stigma_score": 1.0, "employer_support_score": -0.24},
+       "employer_support_score": {"stigma_score": -0.24, "employer_support_score": 1.0}
+     }
+     ```
+
+2. **`/logistic_regression` (POST)**  
+   - **Description**: Runs a logistic regression model to predict mental health treatment based on user-specified features.
+   - **Request Body**:
+     ```json
+     {
+       "target": "treatment",
+       "features": ["age", "stigma_score", "employer_support_score"]
+     }
+     ```
+   - **Response**: Returns the model coefficients and intercept.
+   - **Example Response**:
+     ```json
+     {
+       "coefficients": [[-0.5, 0.8, 1.2]],
+       "intercept": [-0.3]
+     }
+     ```
+
+3. **`/geographical_trends` (GET)**  
+   - **Description**: Generates a bar chart showing the number of survey responses by country.
+   - **Response**: Returns a base64-encoded image of the bar chart.
+
+4. **`/summary_statistics` (GET)**  
+   - **Description**: Provides summary statistics for each feature in the dataset.
+   - **Response**: Returns a JSON object containing summary statistics (mean, standard deviation, etc.).
+
+### Technologies Used in Backend
+- **Flask**: To create the web server and handle API routes.
+- **Pandas**: For data manipulation and analysis.
+- **Scikit-Learn**: For machine learning tasks like logistic regression.
+- **Matplotlib**: For generating plots.
+- **Base64**: To encode images for web display.
+
+## Web Front-End (5 Points)
+
+The front-end is implemented in **HTML**, **CSS**, and **JavaScript** (using jQuery). The interface allows users to interact with the backend API and visualize the results dynamically. The main front-end file is `index.html`.
+
+### Key Features
+
+1. **Dropdown for Analysis Selection**:  
+   Users can select different types of analyses from a dropdown menu. The available options are:
+   - Summary Statistics
+   - Correlation Matrix
+   - Sentiment Analysis
+   - Geographical Trends
+   - Logistic Regression
+
+2. **Dynamic Interaction**:  
+   Depending on the selected analysis, the interface dynamically displays relevant inputs and results.
+
+3. **Result Display Area**:  
+   A dedicated `#result` div displays tables, charts, or images returned from the server API.
+
+4. **Visualization**:  
+   Results are presented in a user-friendly format, including tables for correlation and summary statistics, and images for geographical trends.
+
+### Example HTML Structure
+
+```html
+<select id="analysis">
+    <option value="summary">Summary Statistics</option>
+    <option value="correlation">Correlation Matrix</option>
+    <option value="sentiment_analysis">Sentiment Analysis</option>
+    <option value="geographical_trends">Geographical Trends</option>
+    <option value="logistic_regression">Logistic Regression</option>
+</select>
+<button id="run-analysis">Run Analysis</button>
+<div id="result">Results will appear here.</div>
+```
+
+### JavaScript Functions
+
+1. **Handling Analysis Requests**:
+
+```javascript
+$('#run-analysis').click(function () {
+    const analysis = $('#analysis').val();
+    
+    if (analysis === 'sentiment_analysis' || analysis === 'geographical_trends') {
+        const imgUrl = `/${analysis}`;
+        $('#result').html(`<img src="${imgUrl}" alt="${analysis} Image">`);
+    } else {
+        $.ajax({
+            url: `/${analysis}`,
+            method: analysis === 'logistic_regression' ? 'POST' : 'GET',
+            contentType: 'application/json',
+            success: function (response) {
+                if (analysis === 'correlation') {
+                    displayCorrelationTable(response);
+                } else if (analysis === 'summary') {
+                    displaySummaryTable(response);
+                } else if (analysis === 'logistic_regression') {
+                    displayLogisticRegression(response);
+                }
+            },
+            error: function () {
+                $('#result').html('Error: Could not fetch the data.');
+            }
+        });
+    }
+});
+```
+
+## Web Interface (5 Points)
+
+The web interface has the following features:
+
+1. **Select Analysis Option (1 Point)**:  
+   Users can choose from multiple analysis options via a dropdown menu.
+
+2. **Specify Parameters (2 Points)**:  
+   For logistic regression, users can specify the target variable and feature columns.
+
+3. **Respond to Different Parameters (1 Point)**:  
+   The interface adapts based on the selected analysis, showing appropriate input fields and displaying relevant results.
+
+4. **Visualize Results (2 Points)**:  
+   Results are displayed in tables (for summary statistics and correlation), and images (for geographical trends and sentiment analysis).
+
+## API Integration (4 Points)
+
+1. **Uses an API to Request Specific Analyses (2 Points)**:  
+   The front-end sends requests to the Flask server API endpoints (`/correlation`, `/logistic_regression`, `/geographical_trends`, etc.) based on user input.
+
+2. **Retrieves Results from API (2 Points)**:  
+   The front-end processes and displays the results returned by the API in various formats (tables, charts, images).
+
+---
+
+
 
 
 
