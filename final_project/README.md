@@ -1832,6 +1832,39 @@ if __name__ == '__main__':
 ```
 
 
+## Surprising Results and Unexpected Difficulties
+
+### Surprising Results
+
+1. **High Levels of Stigma in the Tech Industry**:  
+   Despite the tech industry's reputation for innovation and progressive work culture, the analysis revealed that **stigma around mental health remains high**. Many respondents reported hesitancy in seeking mental health treatment due to fear of negative consequences or lack of support from their employers.
+
+2. **Weak Correlation Between Age and Mental Health Outcomes**:  
+   It was surprising to find that **age had minimal impact on mental health outcomes**. The expectation was that younger or older employees might experience significantly different levels of mental health support or stigma, but the data did not strongly support this hypothesis.
+
+3. **Employer Support as a Key Predictor**:  
+   The logistic regression analysis showed that **employer support score** was one of the most significant predictors of whether an individual sought mental health treatment. This underscores the importance of workplace policies and employer attitudes in shaping mental health outcomes.
+
+### Unexpected Difficulties
+
+1. **Data Imbalances**:  
+   The dataset contained a significant imbalance in certain categories (e.g., gender), with a majority of respondents identifying as male. This imbalance affected the performance of predictive models like logistic regression, leading to potential bias in the results.
+
+2. **Handling Missing Values**:  
+   Several columns, such as `coworkers` and `supervisor`, had **missing values**. Deciding how to handle these missing entries without introducing bias or losing valuable information was challenging.
+
+3. **Backend Plot Generation on macOS**:  
+   When generating plots with **Matplotlib** in the Flask backend, an error occurred on macOS due to threading issues. This required switching to a **non-interactive backend (`Agg`)** to ensure the plots could be generated without crashing the application.
+
+4. **Sentiment Analysis Complexity**:  
+   Processing and analyzing the comments field for sentiment analysis proved more complex than anticipated. The comments varied widely in length, tone, and content, making it challenging to achieve accurate sentiment classification.
+
+
+## Conclusion
+
+This final project effectively applied a range of computational methods to analyze a workplace mental health survey dataset focused on tech workers, revealing critical insights into factors influencing mental health support, stigma, and treatment. By conducting correlation analysis, logistic regression, sentiment analysis, and geographical trends, the project highlighted the significant role of employer support in encouraging mental health treatment and the persistent stigma within the tech industry. The dynamic web interface, built using Flask, HTML, CSS, and JavaScript, allowed for interactive exploration of these analyses, enabling users to select options, input parameters, and visualize results. Despite challenges such as data imbalances, missing values, and backend threading issues on macOS, these were overcome through thoughtful preprocessing, model validation, and backend configuration adjustments. The project provided surprising insights, such as the weak correlation between age and mental health outcomes, and underscored the need for workplace-specific mental health policies. Overall, this project demonstrated a comprehensive approach to data analysis, visualization, and interactive application development, offering valuable learnings and actionable outcomes for improving mental health support in the tech industry.
+
+
 
 
 
