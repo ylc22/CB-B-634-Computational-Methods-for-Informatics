@@ -661,6 +661,7 @@ print(summary_stats)
 
 **output**
 
+```python
 age  stigma_score  employer_support_score
 count  1.259000e+03   1259.000000             1259.000000
 mean   7.942815e+07      2.333598                4.231930
@@ -670,6 +671,225 @@ min   -1.726000e+03      0.000000                0.000000
 50%    3.100000e+01      2.000000                4.000000
 75%    3.600000e+01      3.000000                6.000000
 max    1.000000e+11      8.000000               10.000000
+```
+
+# **Conclusion: Summary Statistics and Key Findings**
+
+---
+
+## **Steps Taken**
+
+1. **Demographic Breakdown**:
+   - Plotted distributions for **age**, **gender**, and **country** to understand the survey's respondent composition.
+
+2. **Mental Health Treatment**:
+   - Visualized the distribution of respondents who reported receiving mental health treatment (`Yes` or `No`).
+
+3. **Employer Support**:
+   - Plotted the distribution of **employer support scores** derived from survey responses.
+
+4. **Summary Statistics**:
+   - Generated descriptive statistics for **age**, **stigma score**, and **employer support score**.
+
+---
+
+## **Key Findings**
+
+- **Gender**:  
+  Most respondents identified as **Male**, with fewer identifying as **Female** or **Other**, reflecting a gender imbalance typical in the tech industry.
+
+- **Country**:  
+  The majority of respondents were from the **United States**, followed by the **United Kingdom** and **Canada**.
+
+- **Mental Health Treatment**:  
+  Respondents were almost evenly split between those who received mental health treatment and those who did not.
+
+- **Employer Support**:  
+  Employer support scores varied widely, with most scores clustering between **2 and 4**.
+
+- **Summary Statistics**:  
+  - Average **age**: ~31 years (some anomalies present).  
+  - Average **stigma score**: 2.3 (moderate stigma).  
+  - Average **employer support score**: 4.2 (mixed levels of support).
+
+
+# *PYTHON SCRIPT FOR 1. CORRELATION ANALYSIS*
+
+```python
+# Import necessary libraries
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load the preprocessed dataset
+file_path = '/Users/luischan/Downloads/preprocessed_survey.csv'
+df = pd.read_csv(file_path)
+
+# Display the first few rows to confirm loading
+print(df.head())
+
+# Select relevant columns for correlation analysis
+correlation_columns = [
+    'treatment',                # Mental health treatment (Yes/No)
+    'stigma_score',             # Aggregated stigma score
+    'employer_support_score',   # Aggregated employer support score
+    'work_interfere'            # How mental health issues interfere with work
+]
+
+# Convert 'treatment' to a binary numeric value for correlation (Yes = 1, No = 0)
+df['treatment'] = df['treatment'].map({'Yes': 1, 'No': 0})
+
+# Convert 'work_interfere' responses to numeric values
+work_interfere_mapping = {
+    'Never': 0,
+    'Rarely': 1,
+    'Sometimes': 2,
+    'Often': 3
+}
+df['work_interfere'] = df['work_interfere'].map(work_interfere_mapping)
+
+# Calculate the correlation matrix
+correlation_matrix = df[correlation_columns].corr()
+
+# Display the correlation matrix
+print(correlation_matrix)
+
+# Plot the correlation heatmap
+plt.figure(figsize=(10, 8))
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt=".2f", linewidths=0.5)
+plt.title('Correlation Heatmap: Employer Support, Stigma, and Mental Health Outcomes')
+plt.show()
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Compute the correlation matrix
+correlation_matrix = df.corr(numeric_only=True)
+
+# Plot the correlation matrix as a heatmap
+plt.figure(figsize=(12, 10))
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
+plt.title("Correlation Matrix Heatmap")
+
+# Save the plot as an image
+plt.savefig("static/correlation_matrix.png", bbox_inches='tight')
+plt.close()
+```
+
+**output**
+```python
+timestamp  age  gender         country state self_employed  \
+0  2014-08-27 11:29:31   37  Female   United States    IL            No   
+1  2014-08-27 11:29:37   44    Male   United States    IN            No   
+2  2014-08-27 11:29:44   32    Male          Canada    CA            No   
+3  2014-08-27 11:29:46   31    Male  United Kingdom    CA            No   
+4  2014-08-27 11:30:22   31    Male   United States    TX            No   
+
+  family_history treatment work_interfere    no_employees  ...  \
+0             No       Yes          Often            6-25  ...   
+1             No        No         Rarely  More than 1000  ...   
+2             No        No         Rarely            6-25  ...   
+3            Yes       Yes          Often          26-100  ...   
+4             No        No          Never         100-500  ...   
+
+  phys_health_consequence coworkers  supervisor  mental_health_interview  \
+0                       0       NaN         2.0                       No   
+1                       0       0.0         0.0                       No   
+2                       0       2.0         2.0                      Yes   
+3                       2       NaN         0.0                    Maybe   
+4                       0       NaN         2.0                      Yes   
+
+   phys_health_interview  mental_vs_physical  obs_consequence  \
+0                  Maybe                 Yes               No   
+1                     No          Don't know               No   
+2                    Yes                  No               No   
+3                  Maybe                  No              Yes   
+4                    Yes          Don't know               No   
+
+                          comments  stigma_score  employer_support_score  
+0  * Small family business - YMMV.           2.0                     6.0  
+1  * Small family business - YMMV.           1.0                     4.0  
+2  * Small family business - YMMV.           4.0                     1.0  
+3  * Small family business - YMMV.           4.0                     2.0  
+4  * Small family business - YMMV.           2.0                     5.0  
+
+[5 rows x 29 columns]
+                        treatment  stigma_score  employer_support_score  \
+treatment                1.000000      0.101579                0.193001   
+stigma_score             0.101579      1.000000                0.000779   
+employer_support_score   0.193001      0.000779                1.000000   
+work_interfere           0.304502      0.057683               -0.029413   
+
+                        work_interfere  
+treatment                     0.304502  
+stigma_score                  0.057683  
+employer_support_score       -0.029413  
+work_interfere                1.000000
+```
+
+![image](https://github.com/user-attachments/assets/66124451-fba7-4bad-8979-db10cfeb7310)
+
+
+# **Conclusion: Correlation Analysis**
+
+---
+
+## **Steps Taken**
+
+1. **Data Preparation**:
+   - Selected relevant columns: `treatment`, `stigma_score`, `employer_support_score`, and `work_interfere`.
+   - Converted categorical data (`treatment` and `work_interfere`) to numeric values for correlation analysis.
+
+2. **Correlation Matrix**:
+   - Calculated the correlation matrix to explore relationships between employer support, stigma, work interference, and likelihood of seeking treatment.
+
+3. **Visualization**:
+   - Plotted a correlation heatmap for an intuitive understanding of the relationships.
+
+---
+
+## **Results**
+
+|                         | Treatment | Stigma Score | Employer Support Score | Work Interfere |
+|-------------------------|-----------|--------------|------------------------|----------------|
+| **Treatment**           | 1.00      | 0.10         | 0.19                   | 0.30           |
+| **Stigma Score**        | 0.10      | 1.00         | 0.00                   | 0.06           |
+| **Employer Support Score** | 0.19   | 0.00         | 1.00                   | -0.03          |
+| **Work Interfere**      | 0.30      | 0.06         | -0.03                  | 1.00           |
+
+---
+
+## **Key Findings**
+
+1. **Treatment and Work Interference**:
+   - **Correlation**: `0.30`  
+   - Individuals experiencing more work interference due to mental health issues are more likely to seek treatment.
+
+2. **Treatment and Employer Support**:
+   - **Correlation**: `0.19`  
+   - Higher employer support is associated with a greater likelihood of seeking treatment.
+
+3. **Treatment and Stigma Score**:
+   - **Correlation**: `0.10`  
+   - Weak positive correlation; stigma may have a minor impact on seeking treatment.
+
+4. **Employer Support and Stigma**:
+   - **Correlation**: `0.00`  
+   - No relationship between employer support and stigma perceptions.
+
+5. **Employer Support and Work Interference**:
+   - **Correlation**: `-0.03`  
+   - Negligible correlation; employer support does not strongly influence work interference.
+
+---
+
+## **Meaning**
+
+- **Work Interference** and **Employer Support** play important roles in whether individuals seek mental health treatment.
+- **Stigma** has a weaker impact, suggesting that other factors influence treatment decisions.
+- **Employer Support Policies** and **Stigma** are largely independent, indicating that improving workplace support may not directly reduce stigma but can still encourage treatment-seeking behavior.
+
+
 
 
 
