@@ -1118,6 +1118,143 @@ Balanced Accuracy: 0.64
 
 
 
+# *PYTHON SCRIPT FOR 3.GEOGRAPHICAL ANALYSIS*
+
+```python
+# Import necessary libraries
+import pandas as pd
+import plotly.express as px
+
+# Load the dataset
+file_path = '/Users/luischan/Downloads/preprocessed_survey.csv'
+df = pd.read_csv(file_path)
+
+# Inspect the 'country' and 'treatment' columns
+print(df[['country', 'treatment']].head())
+
+# Group by country to count how many respondents received mental health treatment in each country
+country_trends = df.groupby('country')['treatment'].value_counts().unstack(fill_value=0)
+country_trends['Total'] = country_trends.sum(axis=1)
+country_trends['Support Rate'] = country_trends['Yes'] / country_trends['Total'] * 100
+
+# Reset the index to make 'country' a column
+country_trends.reset_index(inplace=True)
+
+# Inspect the resulting DataFrame
+print(country_trends.head())
+
+# Plot a choropleth map using Plotly Express
+fig = px.choropleth(
+    country_trends,
+    locations='country',
+    locationmode='country names',
+    color='Support Rate',
+    hover_name='country',
+    color_continuous_scale='Viridis',
+    title='Mental Health Support Rate by Country'
+)
+
+# Update the layout for better visualization
+fig.update_layout(
+    geo=dict(showframe=False, showcoastlines=True),
+    coloraxis_colorbar=dict(title='Support Rate (%)')
+)
+
+# Show the plot
+fig.show()
+
+
+import matplotlib.pyplot as plt
+
+# Example of plotting support rate by country
+support_rate = df.groupby('country')['treatment'].apply(lambda x: (x == 'Yes').mean() * 100)
+
+# Plot the support rate
+plt.figure(figsize=(15, 8))
+support_rate.sort_values(ascending=False).plot(kind='bar')
+plt.title("Support Rate by Country")
+plt.xlabel("Country")
+plt.ylabel("Support Rate (%)")
+
+# Save the plot as an image
+plt.savefig("static/geographical_trends.png", bbox_inches='tight')
+plt.close()
+```
+
+**output**
+
+```python
+country treatment
+0   United States       Yes
+1   United States        No
+2          Canada        No
+3  United Kingdom       Yes
+4   United States        No
+treatment                 country  No  Yes  Total  Support Rate
+0                       Australia   8   13     21     61.904762
+1                         Austria   3    0      3      0.000000
+2                    Bahamas, The   0    1      1    100.000000
+3                         Belgium   5    1      6     16.666667
+4          Bosnia and Herzegovina   1    0      1      0.000000
+```
+
+<img width="1266" alt="image" src="https://github.com/user-attachments/assets/c5558f9c-8336-4fc9-afe4-73392b26dd6c" />
+
+# Geographical Trends in Mental Health Support
+
+---
+
+## **1. Steps in the Code**
+
+1. **Data Preparation**:
+   - Loaded the dataset containing `country` and `treatment` columns.
+   - Grouped the data by `country` and counted the number of respondents who answered "Yes" or "No" for mental health treatment.
+   - Calculated the **Total Responses** and the **Support Rate** for each country:
+     \[
+     \text{Support Rate} = \left(\frac{\text{Yes Responses}}{\text{Total Responses}}\right) \times 100
+     \]
+
+2. **Visualization**:
+   - Created a **Choropleth map** using **Plotly Express** to visualize the support rate by country.
+   - Applied a **Viridis color scale** to show variations in support rates.
+   - Customized the layout for readability and clear interpretation.
+
+---
+
+## **2. Results**
+
+### **Sample Data**:
+
+| Country                     | No | Yes | Total | Support Rate (%) |
+|-----------------------------|----|-----|-------|------------------|
+| **Australia**               |  8 |  13 |   21  |        61.9     |
+| **Austria**                 |  3 |   0 |    3  |         0.0     |
+| **Bahamas, The**            |  0 |   1 |    1  |       100.0     |
+| **Belgium**                 |  5 |   1 |    6  |        16.7     |
+| **Bosnia and Herzegovina**  |  1 |   0 |    1  |         0.0     |
+
+---
+
+## **3. What It Means**
+
+- **High Support Rates**:  
+  - Countries like **Bahamas** show a **100% support rate**, but this may be influenced by small sample sizes.
+
+- **Moderate Support Rates**:  
+  - **Australia** has a **61.9% support rate**, indicating a relatively balanced approach to mental health support.
+
+- **Low Support Rates**:  
+  - Countries like **Austria** and **Bosnia and Herzegovina** show **0% support rates**, indicating no reported mental health treatment.
+
+### **Insights**:
+- The **Choropleth map** highlights global disparities in mental health support.
+- **Dark purple regions** represent low support rates, while **yellow and green regions** represent higher support rates.
+- The analysis suggests that **mental health support varies widely across countries**, potentially influenced by **cultural, economic, and policy factors**.
+
+This visualization effectively illustrates where mental health support is lacking and where it is relatively strong, providing valuable insights for improving global mental health initiatives.
+
+
+
 
 
 
