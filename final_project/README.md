@@ -493,3 +493,185 @@ These analyses provided deeper insights into the dataset and allowed for predict
 
 **Logistic Regression**: This analysis allowed users to specify the target variable (`treatment`) and a set of features (e.g., `age`, `stigma_score`, `employer_support_score`) as parameters. The model's output varied depending on the selected features, making it flexible and interactive.
 
+
+# *PYTHON SCRIPT FOR SUMMARY STATISTICS*
+
+```python
+# Import necessary libraries
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load the preprocessed dataset
+file_path = '/Users/luischan/Downloads/preprocessed_survey.csv'
+df = pd.read_csv(file_path)
+
+# Display the first few rows to confirm loading
+print(df.head())
+```
+**output**
+```python
+timestamp  age  gender         country state self_employed  \
+0  2014-08-27 11:29:31   37  Female   United States    IL            No   
+1  2014-08-27 11:29:37   44    Male   United States    IN            No   
+2  2014-08-27 11:29:44   32    Male          Canada    CA            No   
+3  2014-08-27 11:29:46   31    Male  United Kingdom    CA            No   
+4  2014-08-27 11:30:22   31    Male   United States    TX            No   
+
+  family_history treatment work_interfere    no_employees  ...  \
+0             No       Yes          Often            6-25  ...   
+1             No        No         Rarely  More than 1000  ...   
+2             No        No         Rarely            6-25  ...   
+3            Yes       Yes          Often          26-100  ...   
+4             No        No          Never         100-500  ...   
+
+  phys_health_consequence coworkers  supervisor  mental_health_interview  \
+0                       0       NaN         2.0                       No   
+1                       0       0.0         0.0                       No   
+2                       0       2.0         2.0                      Yes   
+3                       2       NaN         0.0                    Maybe   
+4                       0       NaN         2.0                      Yes   
+
+   phys_health_interview  mental_vs_physical  obs_consequence  \
+0                  Maybe                 Yes               No   
+1                     No          Don't know               No   
+2                    Yes                  No               No   
+3                  Maybe                  No              Yes   
+4                    Yes          Don't know               No   
+
+                          comments  stigma_score  employer_support_score  
+0  * Small family business - YMMV.           2.0                     6.0  
+1  * Small family business - YMMV.           1.0                     4.0  
+2  * Small family business - YMMV.           4.0                     1.0  
+3  * Small family business - YMMV.           4.0                     2.0  
+4  * Small family business - YMMV.           2.0                     5.0  
+
+[5 rows x 29 columns]
+```
+
+## Demographic Breakdown
+### Gender Breakdown
+
+```python
+# Countplot for gender distribution
+plt.figure(figsize=(8, 5))
+sns.countplot(x='gender', data=df, palette='pastel')
+plt.title('Gender Breakdown of Respondents')
+plt.xlabel('Gender')
+plt.ylabel('Number of Respondents')
+
+import os
+if not os.path.exists("static"):
+    os.makedirs("static")
+
+# Save the current plot
+plt.savefig("static/plot_{len(os.listdir(save_dir)) + 1}.png", bbox_inches='tight')
+plt.close()
+
+plt.show()
+```
+
+**output**
+
+![image](https://github.com/user-attachments/assets/fa39b8e4-16f4-477b-9611-ce0957f54010)
+
+### Country Breakdown
+```python
+# Top 10 countries by number of respondents
+plt.figure(figsize=(12, 6))
+top_countries = df['country'].value_counts().head(10)
+sns.barplot(x=top_countries.index, y=top_countries.values, palette='muted')
+plt.title('Top 10 Countries by Number of Respondents')
+plt.xlabel('Country')
+plt.ylabel('Number of Respondents')
+plt.xticks(rotation=45)
+
+import os
+if not os.path.exists("static"):
+    os.makedirs("static")
+
+# Save the current plot
+plt.savefig("static/plot_{len(os.listdir(save_dir)) + 1}.png", bbox_inches='tight')
+plt.close()
+
+plt.show()
+```
+
+**output**
+
+![image](https://github.com/user-attachments/assets/2b6fe952-0ba1-4b78-bd17-d17bc899dd5b)
+
+## Distribution of Mental Health Treatment
+```python
+# Countplot for mental health treatment distribution
+plt.figure(figsize=(8, 5))
+sns.countplot(x='treatment', data=df, palette='pastel')
+plt.title('Distribution of Mental Health Treatment')
+plt.xlabel('Received Treatment')
+plt.ylabel('Number of Respondents')
+
+import os
+if not os.path.exists("static"):
+    os.makedirs("static")
+
+# Save the current plot
+plt.savefig("static/plot_{len(os.listdir(save_dir)) + 1}.png", bbox_inches='tight')
+plt.close()
+
+plt.show()
+```
+
+![image](https://github.com/user-attachments/assets/a40cfe59-97a7-4f2e-9138-92716309a536)
+
+
+## Distribution of Employer Support
+### Employer Support Score Distribution
+
+```python
+# Plot employer support score distribution
+plt.figure(figsize=(10, 6))
+sns.histplot(df['employer_support_score'], bins=10, kde=True, color='skyblue')
+plt.title('Distribution of Employer Support Scores')
+plt.xlabel('Employer Support Score')
+plt.ylabel('Number of Respondents')
+
+import os
+if not os.path.exists("static"):
+    os.makedirs("static")
+
+# Save the current plot
+plt.savefig("static/plot_{len(os.listdir(save_dir)) + 1}.png", bbox_inches='tight')
+plt.close()
+
+plt.show()
+```
+
+**output**
+
+![image](https://github.com/user-attachments/assets/b87b9cc5-3695-4b96-b950-8d67a000a1ba)
+
+
+### Summary Statistics Table
+
+```python
+# Generate a summary statistics table for age, stigma score, and employer support score
+summary_stats = df[['age', 'stigma_score', 'employer_support_score']].describe()
+print(summary_stats)
+```
+
+**output**
+
+age  stigma_score  employer_support_score
+count  1.259000e+03   1259.000000             1259.000000
+mean   7.942815e+07      2.333598                4.231930
+std    2.818299e+09      1.384645                2.645492
+min   -1.726000e+03      0.000000                0.000000
+25%    2.700000e+01      1.000000                2.000000
+50%    3.100000e+01      2.000000                4.000000
+75%    3.600000e+01      3.000000                6.000000
+max    1.000000e+11      8.000000               10.000000
+
+
+
+
+
