@@ -1570,6 +1570,268 @@ The web interface has the following features:
 ---
 
 
+# *PYTHON SCRIPT FOR app.py*
+
+```python
+from flask import Flask, request, jsonify, render_template, send_from_directory
+from flask_cors import CORS
+import pandas as pd
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import classification_report, confusion_matrix
+import os
+
+
+# Load necessary data
+data_path = 'preprocessed_survey.csv'
+df = pd.read_csv(data_path)
+
+
+# Create Flask app
+app = Flask(__name__)
+CORS(app)
+
+
+# Home route to render index.html
+@app.route('/')
+def home():
+   return render_template('index.html')
+
+
+# Endpoint: /summary - Returns summary statistics as JSON
+@app.route('/summary', methods=['GET'])
+def summary():
+   try:
+       summary_stats = df.describe(include='all').fillna('N/A').to_dict()
+       return jsonify(summary_stats)
+   except Exception as e:
+       return jsonify({"error": str(e)}), 500
+
+
+# Endpoint: /correlation - Returns correlation matrix as JSON
+@app.route('/correlation', methods=['GET'])
+def correlation():
+   try:
+       correlation_matrix = df.corr(numeric_only=True).fillna(0).to_dict()
+       return jsonify(correlation_matrix)
+   except Exception as e:
+       return jsonify({"error": str(e)}), 500
+
+
+# Endpoint: /sentiment_analysis - Returns sentiment analysis image
+@app.route('/sentiment_analysis', methods=['GET'])
+def sentiment_analysis():
+   return send_from_directory('static', 'sentiment_analysis.png')
+
+
+# Endpoint: /geographical_trends - Returns geographical trends image
+@app.route('/geographical_trends', methods=['GET'])
+def geographical_trends():
+   return send_from_directory('static', 'geographical_trends.png')
+
+
+# Endpoint: /logistic_regression - Returns logistic regression predictions and metrics
+@app.route('/logistic_regression', methods=['POST'])
+def logistic_regression():
+   try:
+       # Features and target
+       features = ['age', 'stigma_score', 'employer_support_score']
+       target = 'treatment'
+       X = df[features].dropna()
+       y = df.loc[X.index, target].map({'Yes': 1, 'No': 0})
+
+
+       # Scale features
+       scaler = StandardScaler()
+       X_scaled = scaler.fit_transform(X)
+
+
+       # Train/test split
+       X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42)
+
+
+       # Logistic Regression Model
+       model = LogisticRegression(max_iter=1000)
+       model.fit(X_train, y_train)
+       y_pred = model.predict(X_test)
+
+
+       # Metrics
+       report = classification_report(y_test, y_pred, output_dict=True)
+       confusion = confusion_matrix(y_test, y_pred).tolist()
+
+
+       return jsonify({
+           "classification_report": report,
+           "confusion_matrix": confusion
+       })
+   except Exception as e:
+       return jsonify({"error": str(e)}), 500
+
+
+# Run the Flask app
+if __name__ == '__main__':
+   app.run(debug=True)
+```
+
+# *PYTHON SCRIPT FOR index.html*
+
+
+```python
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Workplace Mental Health Analysis</title>
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <style>
+       body {
+           font-family: Arial, sans-serif;
+       }
+       #result {
+           margin-top: 20px;
+           border: 1px solid #ddd;
+           padding: 10px;
+           background-color: #f9f9f9;
+           overflow-x: auto;
+       }
+       select, button {
+           margin: 5px;
+       }
+       table {
+           width: 100%;
+           border-collapse: collapse;
+           margin-bottom: 20px;
+       }
+       table, th, td {
+           border: 1px solid #ddd;
+       }
+       th, td {
+           padding: 8px;
+           text-align: center;
+       }
+       th {
+           background-color: #f2f2f2;
+       }
+       img {
+           max-width: 100%;
+           margin-top: 20px;
+       }
+       .confusion-matrix {
+           display: grid;
+           grid-template-columns: repeat(2, 100px);
+           gap: 10px;
+           justify-content: center;
+       }
+   </style>
+</head>
+<body>
+   <h1>Workplace Mental Health Analysis</h1>
+   <label for="analysis">Select Analysis:</label>
+   <select id="analysis">
+       <option value="summary">Summary Statistics</option>
+       <option value="correlation">Correlation Matrix</option>
+       <option value="sentiment_analysis">Sentiment Analysis</option>
+       <option value="geographical_trends">Geographical Trends</option>
+       <option value="logistic_regression">Logistic Regression</option>
+   </select>
+   <button id="run-analysis">Run Analysis</button>
+  
+   <div id="result">Results will appear here.</div>
+
+
+   <script>
+       $(document).ready(function () {
+           $('#run-analysis').click(function () {
+               const analysis = $('#analysis').val();
+
+
+               if (analysis === 'sentiment_analysis' || analysis === 'geographical_trends') {
+                   const imgUrl = `/${analysis}`;
+                   $('#result').html(`<img src="${imgUrl}" alt="${analysis} Image">`);
+               } else {
+                   $.ajax({
+                       url: `/${analysis}`,
+                       method: analysis === 'logistic_regression' ? 'POST' : 'GET',
+                       contentType: 'application/json',
+                       success: function (response) {
+                           if (analysis === 'correlation') {
+                               displayCorrelationTable(response);
+                           } else if (analysis === 'summary') {
+                               displaySummaryTable(response);
+                           } else if (analysis === 'logistic_regression') {
+                               displayLogisticRegression(response);
+                           }
+                       },
+                       error: function () {
+                           $('#result').html('Error: Could not fetch the data.');
+                       }
+                   });
+               }
+           });
+
+
+           function displaySummaryTable(data) {
+               let table = '<table><tr><th>Variable</th><th>Statistic</th><th>Value</th></tr>';
+               for (const [key, stats] of Object.entries(data)) {
+                   for (const [stat, value] of Object.entries(stats)) {
+                       table += `<tr><td>${key}</td><td>${stat}</td><td>${value}</td></tr>`;
+                   }
+               }
+               table += '</table>';
+               $('#result').html(table);
+           }
+
+
+           function displayCorrelationTable(data) {
+               let table = '<table><tr><th>Variable</th>';
+               const headers = Object.keys(data);
+               headers.forEach(header => {
+                   table += `<th>${header}</th>`;
+               });
+               table += '</tr>';
+               headers.forEach(row => {
+                   table += `<tr><td>${row}</td>`;
+                   headers.forEach(col => {
+                       table += `<td>${(data[row][col] || 0).toFixed(3)}</td>`;
+                   });
+                   table += '</tr>';
+               });
+               table += '</table>';
+               $('#result').html(table);
+           }
+
+
+           function displayLogisticRegression(data) {
+               let report = '<h3>Classification Report</h3><table><tr><th>Class</th><th>Precision</th><th>Recall</th><th>F1-Score</th><th>Support</th></tr>';
+               for (const [key, metrics] of Object.entries(data.classification_report)) {
+                   if (typeof metrics === 'object') {
+                       report += `<tr><td>${key}</td><td>${metrics.precision.toFixed(2)}</td><td>${metrics.recall.toFixed(2)}</td><td>${metrics['f1-score'].toFixed(2)}</td><td>${metrics.support}</td></tr>`;
+                   }
+               }
+               report += '</table>';
+
+
+               let confusion = '<h3>Confusion Matrix</h3><div class="confusion-matrix">';
+               data.confusion_matrix.forEach(row => {
+                   row.forEach(cell => {
+                       confusion += `<div>${cell}</div>`;
+                   });
+               });
+               confusion += '</div>';
+
+
+               $('#result').html(report + confusion);
+           }
+       });
+   </script>
+</body>
+</html>
+```
+
+
 
 
 
