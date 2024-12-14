@@ -1,4 +1,4 @@
-# CB&B 634 Final Project by Luis Chan
+# CB&B 634 Final Project  by Luis Chan
 
 
 # Getting Started
